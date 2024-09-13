@@ -1,0 +1,243 @@
+:root {
+    --white-color: #fff;
+    --black-color: #000;
+    --text-color: #333;
+    --clr-primary: #7380ec;
+    --clr-danger: #ff7782;
+    --clr-success: #41f1b6;
+    --clr-white: #fff;
+    --clr-info-dark: #7d8da1;
+    --clr-info-light: #dce1eb;
+    --clr-dark: #363949;
+    --clr-warnig: #ff4edc;
+    --clr-light: rgba(132, 139, 200, 0.18);
+    --clr-primary-variant: #111e88;
+    --clr-dark-variant: #677483;
+    --clr-color-background: #f6f6f9;
+
+    --card-border-radius: 2rem;
+    --border-radius-1: 0.4rem;
+    --border-radius-2: 0.8rem;
+    --border-radius-3: 1.2rem;
+
+    --card-padding: 1.8rem;
+    --padding-1: 1.2rem;
+    --box-shadow: 0 2rem 3rem var(--clr-light);
+
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    border: 0;
+    list-style: none;
+    appearance: none;
+}
+
+.dark-theme-variables {
+    --clr-color-background: #181a1e;
+    --clr-white: #202528;
+    --clr-light: rgba(0, 0, 0, 0.4);
+    --clr-dark: #edeffd;
+    --clr-dark-variant: #677483;
+    --box-shadow: 0 2rem 3rem var(--clr-light)
+}
+
+.body1 {
+    height: auto;
+    font-size: 0.88rem;
+    user-select: none;
+    overflow-x: hidden;
+    background: var(--clr-color-background);
+}
+
+.container1 {
+    display: grid;
+    width: 96%;
+    gap: 1.8rem;
+    grid-template-columns: 66% 33%;
+    margin: 0 auto;
+}
+
+.main1 {
+    margin-top: 1.4rem;
+    width: auto;
+}
+
+.main1 input {
+    background-color: transparent;
+    border: 0px;
+    outline: 0px;
+    color: var(--clr-dark);
+}
+
+.main1 .date1 {
+    display: inline-block;
+    background-color: var(--clr-white);
+    border-radius: var(--border-radius-1);
+    /* margin-top: 1rem; */
+    padding: 0.25rem 1.6rem;
+}
+
+.main1 .insights {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    font-size: 15px;
+}
+
+.main1 .insights>div {
+    background-color: var(--clr-white);
+    padding: 13px 13px 0px 26px;
+    border-radius: var(--card-border-radius);
+    margin-top: 1rem;
+    box-shadow: var(--box-shadow);
+    transition: all .3s ease;
+    margin-right: 1rem;
+    max-height: 190px;
+}
+
+.main1 .insights>div:hover {
+    box-shadow: none;
+}
+
+.main1 .insights>div span {
+    background: coral;
+    padding: 0.5rem;
+    border-radius: 50%;
+    color: var(--clr-white);
+}
+
+
+.main1 .insights>div.orders span {
+    background: var(--clr-primary);
+}
+
+
+.main1 .insights>div.income span {
+    background: var(--clr-success);
+}
+
+
+.main1 .insights>div .middle {
+    max-width: 170px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.main1.insights>div .middle h1 {
+    font-size: 1.6rem;
+}
+
+/* .main1 h1 {
+    color: var(--clr-dark);
+}
+
+.main1 .insights h1 {
+    color: var(--clr-dark);
+}
+
+.main1 .insights p {
+    font-size: 13px;
+} */
+
+.main1 .insights h3 {
+    color: var(--clr-dark);
+}
+
+.main1 .insights p {
+    color: var(--clr-dark);
+}
+
+
+.main1 .recent_order {
+    margin-top: 2rem;
+    font-size: 15px;
+}
+
+.main1 .recent_order>div>h4,
+.page1 {
+    padding: 15px;
+    padding-left: 0px;
+}
+
+
+.main1 .recent_order>div>div button span {
+    background-color: var(--clr-white);
+    width: 100%;
+    border-radius: var(--card-border-radius);
+    text-align: center;
+    padding: 5px;
+    box-shadow: var(--box-shadow);
+    transition: all .3s ease;
+    color: var(--clr-dark);
+    width: 98%;
+}
+
+.main1 .recent_order table {
+    background-color: var(--clr-white);
+    width: 100%;
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
+    text-align: center;
+    box-shadow: var(--box-shadow);
+    transition: all .3s ease;
+    color: var(--clr-dark);
+    width: 98%;
+}
+
+.main1 .recent_order table th,
+td {
+    padding: 15px 0px 15px 0px;
+}
+
+.main1 .recent_order table:hover {
+    box-shadow: none;
+}
+
+.main1 table tbody tr {
+    height: 3.8rem;
+    border-top: 1px solid var(--clr-dark);
+    color: var(--clr-dark-variant);
+}
+
+.main1 table tbody td {
+    height: 3.8rem;
+    border-top: 1px solid var(--clr-dark);
+}
+
+.main1 .recent_order a {
+    text-align: center;
+    display: block;
+    margin: 1rem;
+}
+
+.ThongKe {
+    text-align: center;
+    font-size: 15px;
+}
+
+.ThongKe h3 {
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+.ThongKe .card1 {
+    background-color: var(--clr-white);
+    width: 90%;
+    border-radius: var(--card-border-radius);
+    padding: 10px;
+    text-align: center;
+    box-shadow: var(--box-shadow);
+    transition: all .3s ease;
+    color: var(--clr-dark);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ThongKe .card1:hover {
+    box-shadow: none;
+}

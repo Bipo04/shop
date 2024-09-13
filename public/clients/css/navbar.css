@@ -1,0 +1,141 @@
+* {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+.name-1 {
+    margin-left: 5px;
+    color: #b0692b;
+}
+.name-2 {
+    color: #58291a;
+}
+
+.navbar {
+    width: 100%;
+    height: 60px;
+    background-color: #fecedc;
+    padding: 0;
+    /* position: fixed;
+    top: 0;
+    z-index: 1000; */
+}
+
+.navbar-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Canh giữa các phần tử và đẩy .account-container về phía bên phải */
+    padding: 0 50px;
+    height: 100%;
+    width: 100%;
+}
+
+.brand-container {
+    width: 20%;
+}
+
+.name-shop {
+    font-family: "Dancing Script", cursive;
+    font-size: 30px;
+    height: 50px;
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+}
+
+.name-shop a {
+    text-decoration: none;
+    color: black;
+}
+
+.menu-container {
+    margin-top: 12px;
+    width: 60%;
+    display: flex;
+    justify-content: center; /* Canh giữa các phần tử trong menu-container */
+}
+
+.menu-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+.menu-list-item {
+    margin-right: 30px;
+}
+
+.menu-list-item:last-child {
+    margin-right: 0; /* Loại bỏ margin-right ở phần tử cuối cùng */
+}
+
+.menu-list-item a {
+    text-decoration: none;
+    font-size: 18px;
+    color: black;
+}
+
+
+.account-container {
+    width: 20%;
+    align-items: center;
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.cart-text {
+    border: none;
+    font-size: 18px;
+    background-color: #fecedc;
+    margin-right: 20px;
+}
+
+.profile-text {
+    border: none;
+    font-size: 18px;
+    background-color: #fecedc;
+}
+
+.profile-dropdown {
+    display: block;
+    position: absolute;
+    background-color: #fecedc;
+    top: 46px;
+    width: 120px;
+    z-index: 102;
+    border-radius: 5px;
+}
+
+.dropdown-active {
+    display: none ;
+}
+
+
+.profile-dropdown ul {
+    padding: 0;
+}
+
+.profile-dropdown ul li{
+    padding: 5px 17px 10px 17px;
+    display: block;
+    text-decoration: none;
+    text-align: center;
+}
+
+.profile-dropdown ul li a {
+    text-decoration: none;
+    color: black;
+}
+
+.dropdown-active {
+    display: none ;
+}
+
+.profile-dropdown-item {
+    margin-top: 10px;
+    font-size: 16px;
+}

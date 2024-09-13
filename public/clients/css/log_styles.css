@@ -1,0 +1,138 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body{
+  min-height: 100vh;
+  width: 100%;
+  background-image: url('http://localhost:8088/web/public/clients/images/BACK-01.jpg');
+  background-size: cover; /* hoặc 'contain' để điều chỉnh kích thước hình ảnh */
+  background-repeat: no-repeat; /* để không lặp lại hình ảnh */
+  background-position: center center; /* canh giữa hình ảnh */
+}
+
+.navbar {
+  width: 100%;
+  height: 60px;
+  background-color: white;
+  padding: 0;
+}
+
+.navbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Canh giữa các phần tử và đẩy .account-container về phía bên phải */
+  padding: 0 50px;
+  height: 100%;
+  width: 100%;
+}
+
+.brand-container {
+  width: 20%;
+}
+
+.name-shop {
+  font-family: "Dancing Script", cursive;
+  font-size: 30px;
+  font-weight: 500;
+  height: 50px;
+  display: flex;
+}
+
+.name-shop a {
+  text-decoration: none;
+  color: black;
+}
+
+a {
+  text-decoration: none;
+}
+
+.name-1 {
+  margin-left: 5px;
+  color: #b0692b;
+}
+.name-2 {
+  color: #58291a;
+}
+
+.tittle {
+  width: 85%;
+  font-size: 28px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-bottom: 8px;
+  
+}
+
+.container{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  max-width: 430px;
+  width: 100%;
+  background-color: rgba(234, 172, 188, 0.5);
+  border-radius: 7px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.container .registration{
+  display: block;
+}
+
+.container .form{
+  padding: 2rem;
+}
+.form header{
+  font-size: 2rem;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+ .form input{
+   height: 60px;
+   width: 100%;
+   padding: 0 15px;
+   font-size: 17px;
+   margin-bottom: 1.3rem;
+   border: 1px solid #ddd;
+   border-radius: 6px;
+   outline: none;
+ }
+ .form input:focus{
+   box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+ }
+.form a{
+  font-size: 16px;
+  color: black;
+  text-decoration: none;
+}
+.form a:hover{
+  text-decoration: underline;
+}
+.form input.button{
+  color: black;
+  background: white;
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  margin-top: 1.7rem;
+  cursor: pointer;
+  transition: 0.4s;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+.form input.button:hover{
+  background: white;
+}
+.signup{
+  font-size: 17px;
+  text-align: center;
+}
+.signup label{
+  color: black;
+  cursor: pointer;
+}
+.signup label:hover{
+  text-decoration: underline;
+}
