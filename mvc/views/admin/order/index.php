@@ -64,7 +64,7 @@ foreach($data['orders'] as $item) {
                             <td>
                                 <button class="btn btn-outline-primary" onclick="editOrder(this)"
                                     style="font-size: 15px;">Sửa</button>
-                                <a href="http://localhost:8088/web/admin/order/detail?id='.$item['id'].'">
+                                <a href="http://localhost:8088/shop/admin/order/detail?id='.$item['id'].'">
                                 <button class="btn btn-outline-dark"
                                     style="font-size: 15px">Chi tiết</button></a>
                             </td>
@@ -96,7 +96,7 @@ function editOrder(button) {
         // Tạo dropdown
         statusCell.innerHTML = `
             <select class="form-control">
-                <option ${currentStatus === 'Chờ xử lí' ? 'selected' : ''}>Đang xử lí</option>
+                <option ${currentStatus === 'Chờ xử lí' ? 'selected' : ''}>Chờ xử lí</option>
                 <option ${currentStatus === 'Đang chuẩn bị' ? 'selected' : ''}>Đang chuẩn bị</option>
                 <option ${currentStatus === 'Đang giao hàng' ? 'selected' : ''}>Đang giao hàng</option>
                 <option ${currentStatus === 'Đã giao hàng' ? 'selected' : ''}>Đã giao hàng</option>
@@ -162,24 +162,17 @@ function formatToVND(amount) {
     });
 }
 document.querySelectorAll('.amount-to-format').forEach(element => {
-    const amountValue = parseFloat(element.textContent); // Lấy giá trị số tiền từ nội dung của thẻ
+    const amountValue = parseFloat(element.textContent);
     element.textContent = formatToVND(
-        amountValue); // Định dạng lại số tiền thành VND và cập nhật nội dung của thẻ
+        amountValue); 
 });
 
 function removeMilliseconds(dateTimeStr) {
-    // Tách chuỗi thành ngày và thời gian
     let parts = dateTimeStr.split(' ');
-
-    // Lấy phần ngày và phần thời gian
     let datePart = parts[0];
     let timePart = parts[1];
-
-    // Tách phần thời gian để loại bỏ ".000"
     let timeParts = timePart.split('.');
     let timeWithoutMs = timeParts[0];
-
-    // Kết hợp lại thành định dạng mới
     let formattedDateTime = datePart + ' ' + timeWithoutMs;
 
     return formattedDateTime;

@@ -82,7 +82,7 @@ foreach($data['order'] as $item) {
                 <td class="amount-to-format">'.$item['total_money'].'</td>
                 <td class="dd_time">'.$item['order_date'].'</td>
                 <td>'.$item['status'].'</td>
-                <td class="text-primary"><a href="http://localhost:8088/web/admin/order/detail?id='.$item['id'].'">Chi tiết</a></td>
+                <td class="text-primary"><a href="http://localhost:8088/shop/admin/order/detail?id='.$item['id'].'">Chi tiết</a></td>
             </tr>';
 }
 ?>
@@ -123,7 +123,7 @@ document.getElementById('dateInput').addEventListener('change', function() {
     const url = currentUrl.split('?')[0];
     window.location.href = `${url}?date=${newDate}`;
 
-    xhr.open('POST', 'http://localhost:8088/web/admin/dashboard', true);
+    xhr.open('POST', 'http://localhost:8088/shop/admin/dashboard', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send(`date=${encodeURIComponent(newDate)}`);
 })

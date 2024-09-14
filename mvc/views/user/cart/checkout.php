@@ -6,22 +6,22 @@
                 <div class="title">Địa chỉ nhận hàng</div>
                 <div class="content-profile">
                     <div class="content-profile-item" id="n">
-                        <?php if(isset($_SESSION[$_COOKIE['userId']]['temp']) && $_SESSION[$_COOKIE['userId']]['temp']['fullname'] != '') {
-                            echo $_SESSION[$_COOKIE['userId']]['temp']['fullname']; 
+                        <?php if(isset($_SESSION['temp']) && $_SESSION['temp']['fullname'] != '') {
+                            echo $_SESSION['temp']['fullname']; 
                         }
-                        else echo $_SESSION[$_COOKIE['userId']]['fullname']; ?>
+                        else echo $_SESSION['user']['fullname']; ?>
                     </div>
                     <div class="content-profile-item" id="p">
-                        <?php if(isset($_SESSION[$_COOKIE['userId']]['temp']) && $_SESSION[$_COOKIE['userId']]['temp']['phone_number'] != '') {
-                            echo $_SESSION[$_COOKIE['userId']]['temp']['phone_number']; 
+                        <?php if(isset($_SESSION['temp']) && $_SESSION['temp']['phone_number'] != '') {
+                            echo $_SESSION['temp']['phone_number']; 
                         }
-                        else echo $_SESSION[$_COOKIE['userId']]['phone_number']; ?>
+                        else echo $_SESSION['user']['phone_number']; ?>
                     </div>
                     <div class="content-profile-item" id="a">
-                        <?php if(isset($_SESSION[$_COOKIE['userId']]['temp']) && $_SESSION[$_COOKIE['userId']]['temp']['address'] != '') {
-                            echo $_SESSION[$_COOKIE['userId']]['temp']['address']; 
+                        <?php if(isset($_SESSION['temp']) && $_SESSION['temp']['address'] != '') {
+                            echo $_SESSION['temp']['address']; 
                         }
-                        else echo $_SESSION[$_COOKIE['userId']]['address']; ?>
+                        else echo $_SESSION['user']['address']; ?>
                     </div>
                     <div class="content-profile-item" id="change"><button>Thay đổi</button></div>
                 </div>
@@ -54,7 +54,7 @@ if($data['cart']) {
     $result = $data['cart'];
 }
 else {
-    $result = $_SESSION[$_COOKIE['userId']]['cart'];
+    $result = $_SESSION['cart'];
 }
 foreach($result as $item) {
     $totalPrice += $item['price']*$item['quantity'];
@@ -91,7 +91,7 @@ echo '    <div class="flex-end">
         </div>
     </div>
     <div class="xacnhan">
-        <div class="btn btn-primary">Thanh toán</div>
+        <div class="btn btn-primary">Đặt đơn</div>
     </div>
     <div class="Modal hidden">
         <div class="Modal_overlay"></div>
@@ -103,24 +103,24 @@ echo '    <div class="flex-end">
             <div class="Modal-formbuy">
                 <div>
                     <label for="fullname">Họ tên người nhận:</label>
-                    <input type="text" id="fullname" name="fullname" value="<?php if(isset($_SESSION[$_COOKIE['userId']]['temp']) && $_SESSION[$_COOKIE['userId']]['temp']['fullname'] != '') {
-                            echo $_SESSION[$_COOKIE['userId']]['temp']['fullname']; 
+                    <input type="text" id="fullname" name="fullname" value="<?php if(isset($_SESSION['temp']) && $_SESSION['temp']['fullname'] != '') {
+                            echo $_SESSION['temp']['fullname']; 
                         }
-                        else echo $_SESSION[$_COOKIE['userId']]['fullname']; ?>">
+                        else echo $_SESSION['user']['fullname']; ?>">
                 </div>
                 <div>
                     <label for="phone_number">Số điện thoại:</label>
-                    <input type="text" id="phone_number" name="phone_number" value="<?php if(isset($_SESSION[$_COOKIE['userId']]['temp']) && $_SESSION[$_COOKIE['userId']]['temp']['phone_number'] != '') {
-                            echo $_SESSION[$_COOKIE['userId']]['temp']['phone_number']; 
+                    <input type="text" id="phone_number" name="phone_number" value="<?php if(isset($_SESSION['temp']) && $_SESSION['temp']['phone_number'] != '') {
+                            echo $_SESSION['temp']['phone_number']; 
                         }
-                        else echo $_SESSION[$_COOKIE['userId']]['phone_number']; ?>">
+                        else echo $_SESSION['user']['phone_number']; ?>">
                 </div>
                 <div>
                     <label for="address">Địa chỉ nhận hàng:</label>
-                    <input type="text" id="address" name="address" value="<?php if(isset($_SESSION[$_COOKIE['userId']]['temp']) && $_SESSION[$_COOKIE['userId']]['temp']['address'] != '') {
-                            echo $_SESSION[$_COOKIE['userId']]['temp']['address']; 
+                    <input type="text" id="address" name="address" value="<?php if(isset($_SESSION['temp']) && $_SESSION['temp']['address'] != '') {
+                            echo $_SESSION['temp']['address']; 
                         }
-                        else echo $_SESSION[$_COOKIE['userId']]['address']; ?>">
+                        else echo $_SESSION['user']['address']; ?>">
                 </div>
                 <div>
                     <div class="btn btn-primary" id="saveChangesBtn">Lưu thay đổi</div>
@@ -180,7 +180,7 @@ document.getElementById('saveChangesBtn').addEventListener('click', function() {
         }
     };
 
-    xhr.open('POST', 'http://localhost:8088/web/cart/checkout', true);
+    xhr.open('POST', 'http://localhost:8088/shop/cart/checkout', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send(`fullname=${fullname}&phone_number=${phone_number}&address=${address}&type=change`);
 });
@@ -192,28 +192,34 @@ document.querySelector('.xacnhan').addEventListener('click', function() {
     var fullname = document.getElementById('fullname').value;
     var phone_number = document.getElementById('phone_number').value;
     var address = document.getElementById('address').value;
-    var totalprice = document.querySelector('#tongtien').innerHTML;
-
-    totalprice = convertNumber(totalprice);
-
-    const xhr = new XMLHttpRequest();
-
-    xhr.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            modal.style.display = "block";
-        }
-    };
-
-    xhr.open('POST', 'http://localhost:8088/web/cart/buy', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.send(
-        `consignee_name=${fullname}&phone_number=${phone_number}&address=${address}&totalprice=${totalprice}&type=buy`
-    );
+    
+    if (phone_number.trim() === '' || address.trim() === '') {
+        document.querySelector('.Modal').classList.remove('hidden');
+    }
+    else {
+        var totalprice = document.querySelector('#tongtien').innerHTML;
+    
+        totalprice = convertNumber(totalprice);
+    
+        const xhr = new XMLHttpRequest();
+    
+        xhr.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                modal.style.display = "block";
+            }
+        };
+    
+        xhr.open('POST', 'http://localhost:8088/shop/cart/buy', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send(
+            `consignee_name=${fullname}&phone_number=${phone_number}&address=${address}&totalprice=${totalprice}&type=buy`
+        );
+    }
 });
 
 span.onclick = function() {
     modal.style.display = "none";
-    window.location.href = "http://localhost:8088/web/home";
+    window.location.href = "http://localhost:8088/shop/home";
 }
 
 function convertNumber(numberStr) {
@@ -234,4 +240,6 @@ document.querySelectorAll('.amount-to-format').forEach(element => {
     element.textContent = formatToVND(
         amountValue); // Định dạng lại số tiền thành VND và cập nhật nội dung của thẻ
 });
+
+
 </script>

@@ -20,7 +20,7 @@ foreach($data['css'] as $style) {
     <div class="navbar">
         <div class="navbar-container">
             <div class="brand-container">
-                <a href="http://localhost:8088/web/home">
+                <a href="http://localhost:8088/shop/home">
                     <h1 class="name-shop"> <img src="<?=_WEB_ROOT?>/public/clients/images/final-01.png" alt=""
                             style="height:50px;width:50px">
                         <div class="name-1">Angel</div>
@@ -30,27 +30,27 @@ foreach($data['css'] as $style) {
             </div>
             <div class="menu-container">
                 <ul class="menu-list">
-                    <li class="menu-list-item active"><a href="http://localhost:8088/web/category/girl">Nữ</a>
+                    <li class="menu-list-item active"><a href="http://localhost:8088/shop/category/girl">Nữ</a>
                     </li>
-                    <li class="menu-list-item"><a href="http://localhost:8088/web/category/boy">Nam</a></li>
-                    <li class="menu-list-item"><a href="http://localhost:8088/web/category/topsale">Bán chạy</a></li>
-                    <li class="menu-list-item"><a href="http://localhost:8088/web/category/discount">Giảm giá</a></li>
+                    <li class="menu-list-item"><a href="http://localhost:8088/shop/category/boy">Nam</a></li>
+                    <li class="menu-list-item"><a href="http://localhost:8088/shop/category/topsale">Bán chạy</a></li>
+                    <li class="menu-list-item"><a href="http://localhost:8088/shop/category/discount">Giảm giá</a></li>
                 </ul>
             </div>
             <div class="account-container">
-                <a href="http://localhost:8088/web/cart"><button class="cart-text"><i
+                <a href="http://localhost:8088/shop/cart"><button class="cart-text"><i
                             class="fa-solid fa-cart-shopping"></i></button></a>
                 <?php
-if(isset($_COOKIE['userId'])) {
-    if($_SESSION[$_COOKIE['userId']]['role_id'] == 1) {
+if(isset($_COOKIE['token'])) {
+    if($_SESSION['user']['role'] == 1) {
         echo '<button class="profile-text"><i class="fa-solid fa-user"></i> Profile</i></button>
     <div class="profile-dropdown dropdown-active">
         <ul>
-            <li style="margin-top: 10px"><a href="http://localhost:8088/web/admin/dashboard">Quản lí</a>
+            <li style="margin-top: 10px"><a href="http://localhost:8088/shop/admin/dashboard">Quản lí</a>
             </li>
-            <li><a href="http://localhost:8088/web/account/profile">Thông tin</a>
+            <li><a href="http://localhost:8088/shop/account/profile">Thông tin</a>
             </li>
-            <li><a href="http://localhost:8088/web/auth/logout">Đăng xuất</a></li>
+            <li><a href="http://localhost:8088/shop/auth/logout">Đăng xuất</a></li>
         </ul>
     </div>';
     }
@@ -58,15 +58,15 @@ if(isset($_COOKIE['userId'])) {
     echo '<button class="profile-text"><i class="fa-solid fa-user"></i> Profile</i></button>
     <div class="profile-dropdown dropdown-active">
         <ul>
-            <li style="margin-top: 10px"><a href="http://localhost:8088/web/account/profile">Thông tin</a>
+            <li style="margin-top: 10px"><a href="http://localhost:8088/shop/account/profile">Thông tin</a>
             </li>
-            <li><a href="http://localhost:8088/web/auth/logout">Đăng xuất</a></li>
+            <li><a href="http://localhost:8088/shop/auth/logout">Đăng xuất</a></li>
         </ul>
     </div>';
     }
 }
 else {
-    echo '<a href="http://localhost:8088/web/auth/login"><button class="profile-text">Đăng nhập</button></a>';
+    echo '<a href="http://localhost:8088/shop/auth/login"><button class="profile-text">Đăng nhập</button></a>';
 }
 ?>
             </div>

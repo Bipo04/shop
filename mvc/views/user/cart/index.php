@@ -6,7 +6,7 @@
         </p>
         <?php
 $totalPrice = 0;
-if(isset($_SESSION[$_COOKIE['userId']]['cart']) && count($_SESSION[$_COOKIE['userId']]['cart']) > 0) {
+if(isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
     echo '        <div class="card" style="margin-bottom: 10px;">
     <div class="card-body p-4">
         <div class="row align-items-center">
@@ -30,7 +30,7 @@ if(isset($_SESSION[$_COOKIE['userId']]['cart']) && count($_SESSION[$_COOKIE['use
         </div>
     </div>
 </div>';
-    foreach($_SESSION[$_COOKIE['userId']]['cart'] as  $key => $item) {
+    foreach($_SESSION['cart'] as  $key => $item) {
     $gia = $item['price']*$item['quantity'];
     echo '<div class="card">
     <div class="card-body p-4">
@@ -62,7 +62,7 @@ if(isset($_SESSION[$_COOKIE['userId']]['cart']) && count($_SESSION[$_COOKIE['use
                 </div>
             </div>
             <div class="col-md-1 d-flex justify-content-center">
-                <div class="content_col"><a href="http://localhost:8088/web/cart/delete?index='.$key.'">Xóa</a></div>
+                <div class="content_col"><a href="http://localhost:8088/shop/cart/delete?index='.$key.'">Xóa</a></div>
             </div>
         </div>
     </div>
@@ -75,7 +75,7 @@ echo '  <div class="fixed-box">
                     <span style="font-size: 16px;padding-right: 5px;">Tổng thanh toán: </span>
                     <span style="font-size: 16px;padding-right: 5px;" class="amount-to-format">'.$totalPrice.'</span>
                 </p>
-                <form action="http://localhost:8088/web/cart/checkout" method="post">
+                <form action="http://localhost:8088/shop/cart/checkout" method="post">
                     <div class="buy-btn">
                         <button type="submit" class="btn btn-primary">Đặt hàng</button>
                     </div>
@@ -86,7 +86,7 @@ echo '  <div class="fixed-box">
 else {
 echo '<div class="card" style="height: 400px; border:none; display: flex;justify-content: center;align-items: center; ">
     <img src="'._WEB_ROOT.'/public/clients/images/empty-cart.webp" alt="" style="width:300px; margin-bottom:20px">
-    <a href="http://localhost:8088/web/home">
+    <a href="http://localhost:8088/shop/home">
         <button class="btn btn-primary">Mua ngay</button>
     </a>
 </div>';
@@ -118,7 +118,7 @@ const quantityInputs = document.querySelectorAll('.qty');
 
 const updateCart = function(index, quantity) {
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://localhost:8088/web/cart/update', true);
+    xhr.open('POST', 'http://localhost:8088/shop/cart/update', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
     xhr.onreadystatechange = function() {

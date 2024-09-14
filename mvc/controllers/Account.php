@@ -6,124 +6,105 @@ class Account extends Controller {
     public function __construct() {
         $this->UserModel       = $this->model('UserModels');
         $this->OrdersModel     = $this->model('OrdersModels');
+        $this->Jwtoken          = $this->helper('Jwtoken');
+        $this->Authorzation     = $this->helper('Authorzation');
     }
 
     public function profile() {
-        if(isset($_COOKIE['userId'])) {
-            if($_SERVER['REQUEST_METHOD'] == 'POST') {
-                $req = new Request();
-                $data = $req->postFields();
-                $this->UserModel->update($data, ['id' => $_SESSION[$_COOKIE['userId']]['id']]);
-                $_SESSION[$_COOKIE['userId']]['fullname'] = $data['fullname'];
-                $_SESSION[$_COOKIE['userId']]['email'] = $data['email'];
-                $_SESSION[$_COOKIE['userId']]['phone_number'] = $data['phone_number'];
-                $_SESSION[$_COOKIE['userId']]['address'] = $data['address'];
+        if(isset($_COOKIE['token'])) {
+            $verify = $this->Jwtoken->decodeToken($_COOKIE['token'],KEYS);
+            if ($verify != NULL && $verify != 0) {
+                unset($verify['exp']);
+
+                $authUser = $this->Authorzation->checkAuthUser($verify);
+                if($authUser == true) {
+                    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+                        $req = new Request();
+                        $data = $req->postFields();
+                        $result = $this->UserModel->update($data, ['id' => $_SESSION['user']['id']]);
+                        $check = json_decode($result,true);
+                        print_r($check);
+                        die;
+                        $_SESSION['user']['fullname'] = $data['fullname'];
+                        $_SESSION['user']['email'] = $data['email'];
+                        $_SESSION['user']['phone_number'] = $data['phone_number'];
+                        $_SESSION['user']['address'] = $data['address'];
+                    }
+                    $this->view('layouts/client_layout', [
+                        'page'  => 'account/profile',
+                        'css'   => ['account']
+                    ]);
+                }
             }
-            $this->view('layouts/client_layout', [
-                'page'  => 'account/profile',
-                'css'   => ['account']
-            ]);
+            else {
+                setcookie('token', '', time() - 3600, "/");
+                unset($_SESSION['user']);
+                header('location: '.base_url.'/auth/login?expired=true');
+            }
         }
         else {
-            header('location: http://localhost:8088/web/auth/login');
+            header('location: http://localhost:8088/shop/auth/login');
         }
     }
 
     public function purchase() {
-        if(isset($_COOKIE['userId'])) {
-            if($_SERVER['REQUEST_METHOD'] == 'POST') {
-                $this->OrdersModel->update(['status' => 'Đã hủy'], ['id' => $_POST['id']]);
-            }
-            $type = 1;
-            if(isset($_GET['type'])) {
-                $type = $_GET['type'];
-                if($_GET['type'] == '1') {
-                    $kq = $this->OrdersModel->findAll(['*'], ['user_id' => $_SESSION[$_COOKIE['userId']]['id']], 'order_date', 'desc');
-                    $data = $this->OrdersModel->queryExecute('SELECT * FROM dbo.getPurchase('.$_SESSION[$_COOKIE['userId']]['id'].')');
-                    for($i = 0; $i < count($kq); $i++) {
-                        foreach($data as $a) {
-                            if($a['order_id'] == $kq[$i]['id']) {
-                                $kq[$i]['products'][] = $a;
+        if(isset($_COOKIE['token'])) {
+            $verify = $this->Jwtoken->decodeToken($_COOKIE['token'],KEYS);
+            if ($verify != NULL && $verify != 0) {
+                unset($verify['exp']);
+
+                $authUser = $this->Authorzation->checkAuthUser($verify);
+                if($authUser == true) {
+                    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                        $this->OrdersModel->update(['status' => 'Đã hủy'], ['id' => $_POST['id']]);
+                    }
+                    
+                    $type = isset($_GET['type']) ? $_GET['type'] : 1;
+                    $statusFilter = [
+                        '1' => null,
+                        '2' => 'Chờ xử lí',
+                        '3' => 'Đang chuẩn bị',
+                        '4' => 'Đang giao hàng',
+                        '5' => 'Đã giao hàng',
+                        '6' => 'Đã hủy',
+                    ];
+                    
+                    $statusCondition = isset($statusFilter[$type]) ? $statusFilter[$type] : null;
+                    $userId = $_SESSION['user']['id'];
+                    
+                    $conditions = ['user_id' => $userId];
+                    if ($statusCondition) {
+                        $conditions['status'] = $statusCondition;
+                    }
+        
+                    $kq = $this->OrdersModel->findAll(['*'], $conditions, 'order_date', 'desc');
+                    
+                    $data = $this->OrdersModel->queryExecute('SELECT * FROM dbo.getPurchase(' . $userId . ')');
+                    foreach ($kq as &$order) {
+                        $order['products'] = [];
+                        foreach ($data as $a) {
+                            if ($a['order_id'] == $order['id']) {
+                                $order['products'][] = $a;
                             }
                         }
                     }
-                }
-                if($_GET['type'] == '2') {
-                    $kq = $this->OrdersModel->findAll(['*'], ['user_id' => $_SESSION[$_COOKIE['userId']]['id'], 'status' => 'Chờ xử lí'], 'order_date', 'desc');
-                    $data = $this->OrdersModel->queryExecute('SELECT * FROM dbo.getPurchase('.$_SESSION[$_COOKIE['userId']]['id'].')');
-                    for($i = 0; $i < count($kq); $i++) {
-                        foreach($data as $a) {
-                            if($a['order_id'] == $kq[$i]['id']) {
-                                $kq[$i]['products'][] = $a;
-                            }
-                        }
-                    }
-                }
-                if($_GET['type'] == '3') {
-                    $kq = $this->OrdersModel->findAll(['*'], ['user_id' => $_SESSION[$_COOKIE['userId']]['id'], 'status' => 'Đang chuẩn bị'], 'order_date', 'desc');
-                    $data = $this->OrdersModel->queryExecute('SELECT * FROM dbo.getPurchase('.$_SESSION[$_COOKIE['userId']]['id'].')');
-                    for($i = 0; $i < count($kq); $i++) {
-                        foreach($data as $a) {
-                            if($a['order_id'] == $kq[$i]['id']) {
-                                $kq[$i]['products'][] = $a;
-                            }
-                        }
-                    }
-                }
-                if($_GET['type'] == '4') {
-                    $kq = $this->OrdersModel->findAll(['*'], ['user_id' => $_SESSION[$_COOKIE['userId']]['id'], 'status' => 'Đang giao hàng'], 'order_date', 'desc');
-                    $data = $this->OrdersModel->queryExecute('SELECT * FROM dbo.getPurchase('.$_SESSION[$_COOKIE['userId']]['id'].')');
-                    for($i = 0; $i < count($kq); $i++) {
-                        foreach($data as $a) {
-                            if($a['order_id'] == $kq[$i]['id']) {
-                                $kq[$i]['products'][] = $a;
-                            }
-                        }
-                    }
-                }
-                if($_GET['type'] == '5') {
-                    $kq = $this->OrdersModel->findAll(['*'], ['user_id' => $_SESSION[$_COOKIE['userId']]['id'], 'status' => 'Đã giao hàng'], 'order_date', 'desc');
-                    $data = $this->OrdersModel->queryExecute('SELECT * FROM dbo.getPurchase('.$_SESSION[$_COOKIE['userId']]['id'].')');
-                    for($i = 0; $i < count($kq); $i++) {
-                        foreach($data as $a) {
-                            if($a['order_id'] == $kq[$i]['id']) {
-                                $kq[$i]['products'][] = $a;
-                            }
-                        }
-                    }
-                }
-                if($_GET['type'] == '6') {
-                    $kq = $this->OrdersModel->findAll(['*'], ['user_id' => $_SESSION[$_COOKIE['userId']]['id'], 'status' => 'Đã hủy'], 'order_date', 'desc');
-                    $data = $this->OrdersModel->queryExecute('SELECT * FROM dbo.getPurchase('.$_SESSION[$_COOKIE['userId']]['id'].')');
-                    for($i = 0; $i < count($kq); $i++) {
-                        foreach($data as $a) {
-                            if($a['order_id'] == $kq[$i]['id']) {
-                                $kq[$i]['products'][] = $a;
-                            }
-                        }
-                    }
+                    
+                    $this->view('layouts/client_layout', [
+                        'page'      => 'account/purchase',
+                        'css'       => ['account'],
+                        'purchase'  => $kq,
+                        'type'      => $type,
+                    ]);
                 }
             }
             else {
-                $kq = $this->OrdersModel->findAll(['*'], ['user_id' => $_SESSION[$_COOKIE['userId']]['id']], 'order_date', 'desc');
-                $data = $this->OrdersModel->queryExecute('SELECT * FROM dbo.getPurchase('.$_SESSION[$_COOKIE['userId']]['id'].')');
-                for($i = 0; $i < count($kq); $i++) {
-                    foreach($data as $a) {
-                        if($a['order_id'] == $kq[$i]['id']) {
-                            $kq[$i]['products'][] = $a;
-                        }
-                    }
-                }     
+                setcookie('token', '', time() - 3600, "/");
+                unset($_SESSION['user']);
+                header('location: '.base_url.'/auth/login?expired=true');
             }
-            $this->view('layouts/client_layout', [
-                'page'      => 'account/purchase',
-                'css'       => ['account'],
-                'purchase'  => $kq,
-                'type'      => $type,
-            ]);
         }
         else {
-            header('location: http://localhost:8088/web/auth/login');
+            header('location: http://localhost:8088/shop/auth/login');
         }
     }
     

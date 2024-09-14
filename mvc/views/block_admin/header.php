@@ -44,7 +44,7 @@ if($page[0] == 'dashboard') {
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center"
-                href="http://localhost:8088/web/admin/dashboard">
+                href="http://localhost:8088/shop/admin/dashboard">
                 <div class="sidebar-brand-icon">
                     <img src="<?=_WEB_ROOT?>/public/clients/images/final-01.png" alt="" style="height:50px;">
                 </div>
@@ -56,7 +56,7 @@ if($page[0] == 'dashboard') {
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item <?php if($page[0] == 'dashboard') echo 'active'; ?>">
-                <a class="nav-link" href="http://localhost:8088/web/admin/dashboard">
+                <a class="nav-link" href="http://localhost:8088/shop/admin/dashboard">
                     <span>Dashboard</span></a>
             </li>
 
@@ -75,15 +75,15 @@ if($page[0] == 'dashboard') {
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Quản lí:</h6>
                         <a class="collapse-item <?php if($page[0] == 'user') echo 'active'; ?>"
-                            href="http://localhost:8088/web/admin/user">Người dùng</a>
+                            href="http://localhost:8088/shop/admin/user">Người dùng</a>
                         <a class="collapse-item <?php if($page[0] == 'product') echo 'active'; ?>"
-                            href="http://localhost:8088/web/admin/product">Sản phẩm</a>
+                            href="http://localhost:8088/shop/admin/product">Sản phẩm</a>
                         <a class="collapse-item <?php if($page[0] == 'category') echo 'active'; ?>"
-                            href="http://localhost:8088/web/admin/category">Danh mục</a>
+                            href="http://localhost:8088/shop/admin/category">Danh mục</a>
                         <a class="collapse-item <?php if($page[0] == 'supply') echo 'active'; ?>"
-                            href="http://localhost:8088/web/admin/supply">Nhà cung cấp</a>
+                            href="http://localhost:8088/shop/admin/supply">Nhà cung cấp</a>
                         <a class="collapse-item <?php if($page[0] == 'order') echo 'active'; ?>"
-                            href="http://localhost:8088/web/admin/order">Đơn hàng</a>
+                            href="http://localhost:8088/shop/admin/order">Đơn hàng</a>
                     </div>
                 </div>
             </li>
@@ -103,9 +103,9 @@ if($page[0] == 'dashboard') {
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Báo cáo:</h6>
                         <a class="collapse-item <?php if($page[0] == 'revenue') echo 'active'; ?>"
-                            href="http://localhost:8088/web/admin/revenue">Doanh thu</a>
+                            href="http://localhost:8088/shop/admin/revenue">Doanh thu</a>
                         <a class="collapse-item <?php if($page[0] == 'topsale') echo 'active'; ?>"
-                            href="http://localhost:8088/web/admin/topsale">Top sale</a>
+                            href="http://localhost:8088/shop/admin/topsale">Top sale</a>
                     </div>
                 </div>
             </li>
@@ -138,8 +138,8 @@ if($page[0] == 'dashboard') {
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                             aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="http://localhost:8088/web/home">Trang chủ</a>
-                            <a class="dropdown-item" href="http://localhost:8088/web/auth/logout">Đăng xuất</a>
+                            <a class="dropdown-item" href="http://localhost:8088/shop/home">Trang chủ</a>
+                            <a class="dropdown-item" href="http://localhost:8088/shop/auth/logout">Đăng xuất</a>
                         </div>
                     </li>
 

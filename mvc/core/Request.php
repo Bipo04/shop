@@ -67,25 +67,25 @@ class Request {
 
     public function deleteDirectory($dir) {
         if (!file_exists($dir)) {
-            return true; // Directory does not exist, nothing to do
+            return true;
         }
     
         if (!is_dir($dir)) {
-            return unlink($dir); // Not a directory, try to delete it as a file
+            return unlink($dir);
         }
     
         foreach (scandir($dir) as $item) {
             if ($item == '.' || $item == '..') {
-                continue; // Skip current and parent directory links
+                continue;
             }
     
             $itemPath = $dir . DIRECTORY_SEPARATOR . $item;
             if (!$this->deleteDirectory($itemPath)) {
-                return false; // Failed to delete a directory/file, return false
+                return false;
             }
         }
     
-        return rmdir($dir); // Finally remove the directory
+        return rmdir($dir);
     }
 }
 

@@ -12,5 +12,10 @@ class Controller {
             return new $model;
         }
     }
+
+    function helper($helper){
+        require_once "./mvc/helpers/".$helper.".php";
+        return new $helper;
+    }
 }
 ?>

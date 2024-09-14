@@ -1,13 +1,14 @@
 <?php
+
 class Database {
     private static $conn;
 
     public static function getConnection() {
         if (!isset(self::$conn)) {
-            $serverName = 'DESKTOP-5HQDO2R\SQLEXPRESS';
-            $database = 'AngelBabie';
-            $uid = '';
-            $pass = '';
+            $serverName = SERVER_NAME;
+            $database = DB_NAME;
+            $uid = DB_USERNAME;
+            $pass = DB_PASSWORD;
             try {
                 self::$conn = new PDO("sqlsrv:Server=$serverName;Database=$database", $uid, $pass);
             } catch (PDOException $e) {

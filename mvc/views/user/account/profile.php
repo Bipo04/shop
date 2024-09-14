@@ -1,7 +1,7 @@
 <div class="container">
     <div class="sidebar">
-        <a class="sidebar-item active" href="http://localhost:8088/web/account/profile">Thông tin cá nhân</a>
-        <a class="sidebar-item" href="http://localhost:8088/web/account/purchase">Đơn hàng</a>
+        <a class="sidebar-item active" href="http://localhost:8088/shop/account/profile">Thông tin cá nhân</a>
+        <a class="sidebar-item" href="http://localhost:8088/shop/account/purchase">Đơn hàng</a>
     </div>
 
     <div class="col-md-9">
@@ -9,19 +9,19 @@
             <h3 class="profile-content-title">Thông tin cá nhân</h3>
             <div class="account-info">
                 <label for="fullname">Họ và tên:</label>
-                <input type="text" id="fullname" name="fullname" value="<?=$_SESSION[$_COOKIE['userId']]['fullname']?>"
+                <input type="text" id="fullname" name="fullname" value="<?=$_SESSION['user']['fullname']?>"
                     readonly>
 
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" value="<?=$_SESSION[$_COOKIE['userId']]['email']?>"
+                <input type="email" id="email" name="email" value="<?=$_SESSION['user']['email']?>"
                     readonly>
 
                 <label for="phone">Số điện thoại:</label>
                 <input type="text" id="phone_number" name="phone_number"
-                    value="<?=$_SESSION[$_COOKIE['userId']]['phone_number']?>" readonly>
+                    value="<?=$_SESSION['user']['phone_number']?>" readonly>
 
                 <label for="username">Địa chỉ:</label>
-                <input type="text" id="address" name="address" value="<?=$_SESSION[$_COOKIE['userId']]['address']?>"
+                <input type="text" id="address" name="address" value="<?=$_SESSION['user']['address']?>"
                     readonly>
             </div>
             <button class="btn btn-primary Update">Chỉnh sửa</button>
@@ -81,7 +81,7 @@ document.querySelector('.Save').onclick = () => {
         }
     };
 
-    xhr.open('POST', 'http://localhost:8088/web/account/profile', true);
+    xhr.open('POST', 'http://localhost:8088/shop/account/profile', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send(
         `fullname=${fullname}&phone_number=${phone_number}&address=${address}&email=${email}`

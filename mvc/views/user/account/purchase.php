@@ -37,8 +37,8 @@ a {
 
 <div class="container">
     <div class="sidebar">
-        <a class="sidebar-item" href="http://localhost:8088/web/account/profile">Thông tin cá nhân</a>
-        <a class="sidebar-item active" href="http://localhost:8088/web/account/purchase">Đơn hàng</a>
+        <a class="sidebar-item" href="http://localhost:8088/shop/account/profile">Thông tin cá nhân</a>
+        <a class="sidebar-item active" href="http://localhost:8088/shop/account/purchase">Đơn hàng</a>
     </div>
     <div class="content-container">
         <div class="profile-content">
@@ -46,27 +46,27 @@ a {
             <div class="card" style="margin-bottom: 10px; height: 60px; padding: auto; position: sticky;">
                 <section class="card_state card-body">
                     <a class="state <?php if($data['type'] == 1) echo 'active'; ?>"
-                        href="http://localhost:8088/web/account/purchase?type=1" title="Tất cả" aria-role="Tab">
+                        href="http://localhost:8088/shop/account/purchase?type=1" title="Tất cả" aria-role="Tab">
                         <span>Tất cả</span>
                     </a>
                     <a class="state <?php if($data['type'] == 2) echo 'active'; ?>"
-                        href="http://localhost:8088/web/account/purchase?type=2" title="Chờ xử lí" aria-role="Tab">
+                        href="http://localhost:8088/shop/account/purchase?type=2" title="Chờ xử lí" aria-role="Tab">
                         <span>Chờ xử lí</span>
                     </a>
                     <a class="state <?php if($data['type'] == 3) echo 'active'; ?>"
-                        href="http://localhost:8088/web/account/purchase?type=3" title="Đang chuẩn bị" aria-role="Tab">
+                        href="http://localhost:8088/shop/account/purchase?type=3" title="Đang chuẩn bị" aria-role="Tab">
                         <span>Đang chuẩn bị</span>
                     </a>
                     <a class="state <?php if($data['type'] == 4) echo 'active'; ?>"
-                        href="http://localhost:8088/web/account/purchase?type=4" title="Đang giao" aria-role="Tab">
+                        href="http://localhost:8088/shop/account/purchase?type=4" title="Đang giao" aria-role="Tab">
                         <span>Đang giao</span>
                     </a>
                     <a class="state <?php if($data['type'] == 5) echo 'active'; ?>"
-                        href="http://localhost:8088/web/account/purchase?type=5" title="Đã giao" aria-role="Tab">
+                        href="http://localhost:8088/shop/account/purchase?type=5" title="Đã giao" aria-role="Tab">
                         <span>Đã giao</span>
                     </a>
                     <a class="state <?php if($data['type'] == 6) echo 'active'; ?>"
-                        href="http://localhost:8088/web/account/purchase?type=6" title="Đã hủy" aria-role="Tab">
+                        href="http://localhost:8088/shop/account/purchase?type=6" title="Đã hủy" aria-role="Tab">
                         <span>Đã hủy</span>
                     </a>
                 </section>
@@ -170,7 +170,7 @@ function deleteProduct() {
         event.target.remove();
 
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', 'http://localhost:8088/web/account/purchase', true);
+        xhr.open('POST', 'http://localhost:8088/shop/account/purchase', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.send(`id=${id}`);
     }

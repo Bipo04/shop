@@ -28,7 +28,7 @@ foreach($data['data'] as $val) {
     <div class="product-list">';
     foreach($val as $item) {
     $images = explode(',',$item['thumbnail']);
-    echo                    '<a href="http://localhost:8088/web/product?id='.$item['id'].'"><div class="product-list-item">
+    echo                    '<a href="http://localhost:8088/shop/product?id='.$item['id'].'"><div class="product-list-item">
                                 <img class="product-list-item-img"
                                     src="'._WEB_ROOT.'/public/clients/images/'.$images[0].'.jpg" alt="">
                             <h6 class="product_name">'.$item['title'].'</h6>

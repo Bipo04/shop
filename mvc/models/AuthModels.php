@@ -17,10 +17,14 @@ class AuthModels extends Database {
                 }
                 return json_encode(
                     array(
-                        'type'  => 'success',
-                        'id'    => $kq['id'],
-                        'role'  => $role,
-                        'data'  => $kq,
+                        'type'      => 'success',
+                        'id'        => $kq['id'],
+                        'username'  => $kq['username'],
+                        'role'      => $role,
+                        'fullname'  => $kq['fullname'],
+                        'phone_number' => $kq['phone_number'],
+                        'address' => $kq['address'],
+                        'email' => $kq['email']
                     )
                 );
             }
@@ -48,6 +52,7 @@ class AuthModels extends Database {
             );
         }
         $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+        $data['role_id'] = '2';
         $keys = array_keys($data);
         $params = array_fill(0, count($keys), '?');
         $keys = implode(", ", $keys);

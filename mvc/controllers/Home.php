@@ -6,9 +6,28 @@ class Home extends Controller {
     public function __construct() {
         $this->CategoryModel    = $this->model("CategoryModels");
         $this->ProductModel     = $this->model("ProductModels");
+        $this->Jwtoken          = $this->helper('Jwtoken');
+        $this->Authorzation     = $this->helper('Authorzation');
     }
     
     public function index() {
+        if(isset($_COOKIE['token'])) {
+            $verify = $this->Jwtoken->decodeToken($_COOKIE['token'],KEYS);
+            if ($verify != NULL && $verify != 0) {
+                unset($verify['exp']);
+                $authUser = $this->Authorzation->checkAuthUser($verify);
+                if($authUser != true) {
+                    setcookie('token', '', time() - 3600, "/");
+                    unset($_SESSION['user']);
+                    header('location: '.base_url.'/auth/login?expired=true');
+                }
+            }
+            else {
+                setcookie('token', '', time() - 3600, "/");
+                unset($_SESSION['user']);
+                header('location: '.base_url.'/auth/login?expired=true');
+            }
+        }
         $fields = [
             'Product.id as id',
             'category_id',

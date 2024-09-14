@@ -12,7 +12,7 @@
     <div class="navbar">
         <div class="navbar-container">
             <div class="brand-container">
-                <a href="http://localhost:8088/web/home">
+                <a href="http://localhost:8088/shop/home">
                     <h1 class="name-shop"> <img src="<?=_WEB_ROOT?>/public/clients/images/logo-01.jpg" alt=""
                             style="height:50px;">
                         <div class="name-1">Angel</div>

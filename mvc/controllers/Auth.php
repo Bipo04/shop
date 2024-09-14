@@ -3,7 +3,9 @@ class Auth extends Controller {
     public $AuthModel;
     
     public function __construct() {
-        $this->AuthModel = $this->model("AuthModels");
+        $this->AuthModel        = $this->model('AuthModels');
+        $this->Jwtoken          = $this->helper('Jwtoken');
+        $this->Authorzation     = $this->helper('Authorzation');
     }
 
     public function index() {
@@ -11,15 +13,26 @@ class Auth extends Controller {
     }
 
     public function login() {
-        if(isset($_COOKIE['userId'])) {
-            echo 1;
-            if($_SESSION[$_COOKIE['userId']]['role_id'] == '1') {
-                header('location: http://localhost:8088/web/admin/dashboard');
-                die;
+        if(isset($_COOKIE['token'])) {
+            $verify = $this->Jwtoken->decodeToken($_COOKIE['token'],KEYS);
+            if ($verify != NULL && $verify != 0) {
+                unset($verify['exp']);
+                $auth = $this->Authorzation->checkAuth($verify);
+                if ($auth == true) {
+                    header('location: '.base_url_admin.'/dashboard');
+                    die;
+                }
+                $authUser = $this->Authorzation->checkAuthUser($verify);
+                if($authUser == true) {
+                    header('location: '.base_url.'/home');
+                    die;
+                }
             }
             else {
-                header('location: http://localhost:8088/web/home');
-                die;
+                setcookie('token', '', time() - 3600, "/");
+                unset($_SESSION['user']);
+                unset($_SESSION['role']);
+                $this->view("auth/login", ['mess' => 'session expired']);
             }
         }
         else {
@@ -30,26 +43,51 @@ class Auth extends Controller {
                 $result = $this->AuthModel->login($data);
                 $check = json_decode($result,true);
                 if($check['type'] == 'success') {
-                    $id = 'id_' . $check['id'];
-                    session_unset(); // Properly clear the session
-                    setcookie('userId', $id, time() + (86400 * 30), "/");
-                    $_SESSION[$id] = $check['data'];
+                    $array = [
+                        'time'      => time() + (3600 * 24),
+                        'keys'      => KEYS,
+                        'info'      => [
+                            'id'        => $check['id'],
+                            'username'  => $check['username']
+                        ]
+                        
+                    ];
+                    $jwt = $this->Jwtoken->CreateToken($array);
+                    session_unset();
+                    setcookie('token', $jwt, [
+                        'expires' => time() + (3600 * 24),
+                        'path' => '/',
+                        'httponly' => true,
+                    ]);
                     if ($check['role'] == 'admin') {
-                        header("Location: http://localhost:8088/web/admin/dashboard");
-                        exit(); // Ensure no further code execution
+                        $_SESSION['user'] = ['role' => 1,
+                                            'id' => $check['id'],
+                                            'fullname' => $check['fullname'], 
+                                            'phone_number' => $check['phone_number'],
+                                            'address' => $check['address'],
+                                            'email' => $check['email']];
+                        header('location: http://localhost:8088/shop/admin/dashboard');
+                        exit(); 
                     }
                     if ($check['role'] == 'user') {
-                        if($_SESSION[$id]['email'] == '' && $_SESSION[$id]['phone_number'] =='' && $_SESSION[$id]['address'] =='')
-                            header("Location: http://localhost:8088/web/account/profile");
-                        else
-                            header("Location: http://localhost:8088/web/home");
-                        exit(); // Ensure no further code execution
+                        $_SESSION['user'] = ['role' => 2, 
+                                            'id' => $check['id'],
+                                            'fullname' => $check['fullname'], 
+                                            'phone_number' => $check['phone_number'],
+                                            'address' => $check['address'],
+                                            'email' => $check['email']];
+                        header('location: http://localhost:8088/shop/home');
+                        exit();
                     }
             
                 } else {
                     $_SESSION['log'] = 'false';
                 }
             }
+            if(isset($_GET['expired'])) {
+                $this->view("auth/login", ['mess' => 'session expired']);
+            }
+            else
                 $this->view("auth/login");
         }
     }
@@ -57,10 +95,10 @@ class Auth extends Controller {
     public function register() {
         if(isset($_COOKIE['userId'])) {
             if($_SESSION[$_COOKIE['userId']]['role_id'] == '1') {
-                header('location: http://localhost:8088/web/admin/dashboard');
+                header('location: http://localhost:8088/shop/admin/dashboard');
             }
             else {
-                header('location: http://localhost:8088/web/home');
+                header('location: http://localhost:8088/shop/home');
             }
         }
         else {
@@ -82,9 +120,11 @@ class Auth extends Controller {
     }
 
     public function logout() {
-        unset($_SESSION[$_COOKIE['userId']]);
-        setcookie('userId', $id, 0, "/");
-        header('location: http://localhost:8088/web/auth/login');
+        setcookie('token', '', time() - 3600, "/");
+        unset($_SESSION['user']);
+        unset($_SESSION['role']);
+        header('location: http://localhost:8088/shop/auth/login');
+        exit();
     }
 }
 

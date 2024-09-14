@@ -4,7 +4,7 @@
         <input type="text" id="search" placeholder="Tìm kiếm nhà cung cấp" oninput="searchOrder()"
             style="border:none;padding:10px">
     </div>
-    <a href="http://localhost:8088/web/admin/supply/add"><button class="btn"
+    <a href="http://localhost:8088/shop/admin/supply/add"><button class="btn"
             style="margin-bottom: 15px;background-color:#fecedc; color:black">Thêm Nhà Cung Cấp</button></a>
     <div class="card shadow mb-4">
         <div class="card-body">
@@ -63,7 +63,7 @@ function editBtn(btn) {
     var row = btn.parentNode.parentNode;
     var deletedId = row.id;
     console.log(deletedId);
-    window.location.href = "http://localhost:8088/web/admin/supply/update?id=" + `${deletedId}`;
+    window.location.href = "http://localhost:8088/shop/admin/supply/update?id=" + `${deletedId}`;
 }
 
 function deleteBtn(btn) {
@@ -91,7 +91,7 @@ function deleteBtn(btn) {
             }
         };
 
-        xhr.open('POST', 'http://localhost:8088/web/admin/supply/delete', true);
+        xhr.open('POST', 'http://localhost:8088/shop/admin/supply/delete', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.send(`id=${deletedId}`);
     }

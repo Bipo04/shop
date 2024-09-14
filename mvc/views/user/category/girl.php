@@ -22,7 +22,7 @@ foreach($data['categories'] as $item) {
     if(isset($data['cate']) && $item['name-slug'] == $data['cate']) {
         $a .= ' active';
     }
-    $a .= '"href="http://localhost:8088/web/category/girl/'.$item['name-slug'].'">'.$item['name'].'</a>';
+    $a .= '"href="http://localhost:8088/shop/category/girl/'.$item['name-slug'].'">'.$item['name'].'</a>';
     echo $a;
 }
         ?>
@@ -49,7 +49,7 @@ foreach($data['categories'] as $item) {
                 <?php
 foreach($data['products'] as $item) {
     $images = explode(',',$item['thumbnail']);
-    echo                    '<a href="http://localhost:8088/web/product?id='.$item['id'].'">
+    echo                    '<a href="http://localhost:8088/shop/product?id='.$item['id'].'">
                                 <div class="product-list-item">
                                     <img class="product-list-item-img"
                                         src="'._WEB_ROOT.'/public/clients/images/'.$images[0].'.jpg" alt="">

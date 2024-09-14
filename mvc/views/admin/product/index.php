@@ -4,7 +4,7 @@
         <input type="text" id="search" placeholder="Tìm kiếm sản phẩm" oninput="searchOrder()"
             style="border:none;padding:10px">
     </div>
-    <a href="http://localhost:8088/web/admin/product/add"><button class="btn"
+    <a href="http://localhost:8088/shop/admin/product/add"><button class="btn"
             style="margin-bottom: 15px; background-color:#fecedc; color:black;">Thêm Sản
             Phẩm</button></a>
     <div class="card shadow mb-4">
@@ -66,7 +66,7 @@ function editBtn(btn) {
     var row = btn.parentNode.parentNode;
     var deletedId = row.id;
     console.log(deletedId);
-    window.location.href = "http://localhost:8088/web/admin/product/update?id=" + `${deletedId}`;
+    window.location.href = "http://localhost:8088/shop/admin/product/update?id=" + `${deletedId}`;
 }
 
 function deleteBtn(btn) {
@@ -97,7 +97,7 @@ function deleteBtn(btn) {
             }
         };
 
-        xhr.open('POST', 'http://localhost:8088/web/admin/product/delete', true);
+        xhr.open('POST', 'http://localhost:8088/shop/admin/product/delete', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.send(`id=${deletedId}`);
         console.log("Đã xóa sản phẩm");

@@ -6,9 +6,30 @@ class Category extends Controller {
     public function __construct() {
         $this->CategoryModel    = $this->model("CategoryModels");
         $this->ProductModel     = $this->model("ProductModels");
+        $this->Jwtoken          = $this->helper('Jwtoken');
+        $this->Authorzation     = $this->helper('Authorzation');
     }
 
     public function girl($cate = NULL) {
+        if(isset($_COOKIE['token'])) {
+            $verify = $this->Jwtoken->decodeToken($_COOKIE['token'],KEYS);
+            if ($verify != NULL && $verify != 0) {
+                unset($verify['exp']);
+                $authUser = $this->Authorzation->checkAuthUser($verify);
+                if($authUser != true) {
+                    setcookie('token', '', time() - 3600, "/");
+                    unset($_SESSION['user']);
+                    
+                    header('location: '.base_url.'/auth/login?expired=true');
+                }
+            }
+            else {
+                setcookie('token', '', time() - 3600, "/");
+                unset($_SESSION['user']);
+                
+                header('location: '.base_url.'/auth/login?expired=true');
+            }
+        }
         $req = new Request();
         $fields = [
             'Product.id as id',
@@ -75,6 +96,25 @@ class Category extends Controller {
     }
 
     public function boy($cate = NULL) {
+        if(isset($_COOKIE['token'])) {
+            $verify = $this->Jwtoken->decodeToken($_COOKIE['token'],KEYS);
+            if ($verify != NULL && $verify != 0) {
+                unset($verify['exp']);
+                $authUser = $this->Authorzation->checkAuthUser($verify);
+                if($authUser != true) {
+                    setcookie('token', '', time() - 3600, "/");
+                    unset($_SESSION['user']);
+                    
+                    header('location: '.base_url.'/auth/login?expired=true');
+                }
+            }
+            else {
+                setcookie('token', '', time() - 3600, "/");
+                unset($_SESSION['user']);
+                
+                header('location: '.base_url.'/auth/login?expired=true');
+            }
+        }
         $req = new Request();
         $fields = [
             'Product.id as id',
@@ -141,6 +181,25 @@ class Category extends Controller {
     }
 
     public function topsale($cate = NULL) {
+        if(isset($_COOKIE['token'])) {
+            $verify = $this->Jwtoken->decodeToken($_COOKIE['token'],KEYS);
+            if ($verify != NULL && $verify != 0) {
+                unset($verify['exp']);
+                $authUser = $this->Authorzation->checkAuthUser($verify);
+                if($authUser != true) {
+                    setcookie('token', '', time() - 3600, "/");
+                    unset($_SESSION['user']);
+                    
+                    header('location: '.base_url.'/auth/login?expired=true');
+                }
+            }
+            else {
+                setcookie('token', '', time() - 3600, "/");
+                unset($_SESSION['user']);
+                
+                header('location: '.base_url.'/auth/login?expired=true');
+            }
+        }
         if($cate != NULL) {
             if(isset($_GET['order']) && $_GET['order'] != 'default') {
                 $products = $this->ProductModel->queryExecute(
@@ -193,6 +252,25 @@ class Category extends Controller {
     }
 
     public function discount($cate = NULL) {
+        if(isset($_COOKIE['token'])) {
+            $verify = $this->Jwtoken->decodeToken($_COOKIE['token'],KEYS);
+            if ($verify != NULL && $verify != 0) {
+                unset($verify['exp']);
+                $authUser = $this->Authorzation->checkAuthUser($verify);
+                if($authUser != true) {
+                    setcookie('token', '', time() - 3600, "/");
+                    unset($_SESSION['user']);
+                    
+                    header('location: '.base_url.'/auth/login?expired=true');
+                }
+            }
+            else {
+                setcookie('token', '', time() - 3600, "/");
+                unset($_SESSION['user']);
+                
+                header('location: '.base_url.'/auth/login?expired=true');
+            }
+        }
         if($cate != NULL) {
             if(isset($_GET['order']) && $_GET['order'] != 'default') {
                 $products = $this->ProductModel->queryExecute(

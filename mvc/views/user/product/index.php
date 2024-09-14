@@ -76,7 +76,7 @@ echo $data['product']['description'];
                             <div class="qtyplus">+</div>
                         </div>
                         <div class="button-container">
-                            <form action="http://localhost:8088/web/cart/add" method="post">
+                            <form action="http://localhost:8088/shop/cart/add" method="post">
                                 <input type="hidden" name="id" value="<?= $data['product']['id'] ?>">
                                 <input type="hidden" name="price" value="<?php if($data['product']['discount'] != 0) echo $data['product']['discount'];
                                     else echo $data['product']['outbound_price'] ?>">
@@ -86,7 +86,7 @@ echo $data['product']['description'];
                                 <input type="submit" name="add-card-btn" class="round-black-btn" value="Thêm vào giỏ">
                             </form>
 
-                            <form action=" http://localhost:8088/web/cart/checkout" method="post">
+                            <form action=" http://localhost:8088/shop/cart/checkout" method="post">
                                 <input type="hidden" name="id" value="<?= $data['product']['id'] ?>">
                                 <input type="hidden" name="price" value="<?php if($data['product']['discount'] != 0) echo $data['product']['discount'];
                                     else echo $data['product']['outbound_price'] ?>">
