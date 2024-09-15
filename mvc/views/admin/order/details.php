@@ -74,7 +74,7 @@ foreach($data['orderDetails'] as $item) {
     $images = explode(',',$item['thumbnail']);
     echo '  <div class="card1child">
                 <div style="display: flex;">
-                    <div class="card1child-img"><img src="'._WEB_ROOT.'/public/clients/images/'.$images[0].'.jpg" alt=""
+                    <div class="card1child-img"><img src="'.$images[0].'" alt=""
                             class="img-fluid"></div>
                     <div class="card1child-info">
                         <div class="box1child">'.$item['title'].'</div>

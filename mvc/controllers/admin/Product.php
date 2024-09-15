@@ -10,6 +10,8 @@ class Product extends Controller {
         $this->SupplyModel      = $this->model('SupplyModels');
         $this->Jwtoken          = $this->helper('Jwtoken');
         $this->Authorzation     = $this->helper('Authorzation');
+        $this->Cloud            = $this->helper('Cloud');
+        $this->Cloudinary       = $this->Cloud->connect();
     }
 
     public function index() {
@@ -69,20 +71,20 @@ class Product extends Controller {
                             $data['category_id'] = $a[0]['id'];
                             $data['supply_id'] = $b[0]['id'];
                             $file = $_FILES['img']['name'];
-                            $slug_folder = $req->createSlug($data['title']);
-                
-                            $public_dir = 'public/clients/images';
-                            $new_folder = $public_dir . '/' . $slug_folder;
-                            if (!is_dir($new_folder)) {
-                                mkdir($new_folder, 0777, true);
-                            }
+
+                            // $slug_folder = $req->createSlug($data['title']);
+                            // $public_dir = 'public/clients/images';
+                            // $new_folder = $public_dir . '/' . $slug_folder;
+                            // if (!is_dir($new_folder)) {
+                            //     mkdir($new_folder, 0777, true);
+                            // }
                             $i = 0;
                             foreach($file as $val) {
-                                move_uploaded_file($_FILES['img']['tmp_name'][$i++], $new_folder . '/' . $val);
-                                $a = $slug_folder. '/' .$val;
-                                $a = explode('.', $a);
-            
-                                $thumb[] = $a[0];
+                                $result = $this->Cloudinary->uploadApi()->upload($_FILES['img']['tmp_name'][$i++]);
+                                $thumb[] = $result['secure_url'];
+                                // move_uploaded_file($_FILES['img']['tmp_name'][$i++], $new_folder . '/' . $val);
+                                // $a = $slug_folder. '/' .$val;
+                                // $a = explode('.', $a);
                             }
                             $data['thumbnail'] = implode(',', $thumb);
                             $this->ProductModel->add($data);
@@ -169,26 +171,43 @@ class Product extends Controller {
                         unset($_POST['btn']);
                         $id = $_POST['id'];
                         unset($_POST['id']);
+                        $old_thumbnail = $_POST['old_thumbnail'];
+                        unset($_POST['old_thumbnail']);
+                        $array = explode(',', $old_thumbnail);
+                        foreach($array as $item) {
+                            $parts = explode('/', $item);
+                            $last = array_pop($parts);
+                            $publicId = explode('.', $last);
+                            $result = $this->Cloudinary->uploadApi()->destroy($publicId[0], [
+                                'resource_type' => 'image'
+                            ]);
+                        }
                         if($_FILES['img']['name'][0] != '') {
                             $file = $_FILES['img']['name'];
-                            $slug_folder = $req->createSlug($_POST['title']);
-                            $slug_folder = str_replace('-', '_', $slug_folder);
-                            $public_dir = 'public/clients/images';
-                            $new_folder = $public_dir . '/' . $slug_folder;
-                            if (!is_dir($new_folder)) {
-                                mkdir($new_folder, 0777, true);
-                            } else {
-                                $req->deleteDirectory($new_folder);
-                                mkdir($new_folder, 0777, true);
-                            }
+                            // $slug_folder = $req->createSlug($_POST['title']);
+                            // $slug_folder = str_replace('-', '_', $slug_folder);
+                            // $public_dir = 'public/clients/images';
+                            // $new_folder = $public_dir . '/' . $slug_folder;
+                            // if (!is_dir($new_folder)) {
+                            //     mkdir($new_folder, 0777, true);
+                            // } else {
+                            //     $req->deleteDirectory($new_folder);
+                            //     mkdir($new_folder, 0777, true);
+                            // }
+                            // $i = 0;
+                            // foreach($file as $val) {
+                            //     move_uploaded_file($_FILES['img']['tmp_name'][$i++], $new_folder . '/' . $val);
+                            //     $a = $slug_folder. '/' .$val;
+                            //     $a = explode('.', $a);
+            
+                            //     $thumb[] = $a[0];
+                            // }
                             $i = 0;
                             foreach($file as $val) {
-                                move_uploaded_file($_FILES['img']['tmp_name'][$i++], $new_folder . '/' . $val);
-                                $a = $slug_folder. '/' .$val;
-                                $a = explode('.', $a);
-            
-                                $thumb[] = $a[0];
+                                $result = $this->Cloudinary->uploadApi()->upload($_FILES['img']['tmp_name'][$i++]);
+                                $thumb[] = $result['secure_url'];
                             }
+                            $data['thumbnail'] = implode(',', $thumb);
                             $_POST['thumbnail'] = implode(',', $thumb);
                         }
                         $this->ProductModel->update($_POST, ['id' => $id]);

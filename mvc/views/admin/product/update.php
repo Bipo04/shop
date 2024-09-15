@@ -61,6 +61,8 @@ textarea {
                     style="height=100%; weight=100%; color: #6e707e;border: 1px solid #d1d3e2; border-radius: .35rem;"><?=$data['product']['description'] ?></textarea>
             </div>
         </div>
+        <input type="hidden" name="old_thumbnail" class="form-control"
+                value="<?=$data['product']['thumbnail'] ?>">
         <div class="form-group mb-3 Image">
             <div class="mb-3" id="CurrentImages">
                 <label for="">Ảnh hiện tại</label>
@@ -68,8 +70,8 @@ textarea {
                     <?php
 $images = explode(',',$data['product']['thumbnail']);
 foreach($images as $item) {
-    echo '<img src="'._WEB_ROOT.'/public/clients/images/'.$item.'.jpg" alt="">';
-        }
+    echo '<img src="'.$item.'" alt="">';
+}
         ?>
                 </div>
             </div>
