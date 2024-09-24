@@ -1,5 +1,5 @@
 <?php
-require 'vendor/autoload.php'; // Nạp Composer autoloader
+require 'vendor/autoload.php';
 use Cloudinary\Cloudinary;
 
 class Cloud {
