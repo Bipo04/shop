@@ -50,7 +50,7 @@ foreach($data['products'] as $item) {
     echo                    '<a href="http://localhost:8088/shop/product?id='.$item['id'].'">
                                 <div class="product-list-item">
                                     <img class="product-list-item-img"
-                                        src="'.$images[0].'" alt="">
+                                        src="'.url_s3.$images[0].'" alt="">
                                     <h6 class="product_name">'.$item['title'].'</h6>
                                     <div class="price" style="display:flex;">';
     if($item['discount'] != '0')

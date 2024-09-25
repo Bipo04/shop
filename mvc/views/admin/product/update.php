@@ -70,7 +70,7 @@ textarea {
                     <?php
 $images = explode(',',$data['product']['thumbnail']);
 foreach($images as $item) {
-    echo '<img src="'.$item.'" alt="">';
+    echo '<img src="'.url_s3.$item.'" alt="">';
 }
         ?>
                 </div>

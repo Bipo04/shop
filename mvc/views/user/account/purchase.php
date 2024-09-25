@@ -104,7 +104,7 @@ foreach($data['purchase'] as $item) {
         echo 
         '<div class="new_card" style="padding: 10px 24px;align-items:center; display:flex; border-top: 1px solid rgba(0, 0, 0, .09);">
             <div style="flex-grow:1; display:flex;">
-                <img src="'.$thumbnails[0].'"
+                <img src="'.url_s3.$thumbnails[0].'"
                 alt="" class="img-fluid" style="width:100px">
                 <div style="padding: 0 0 0 12px;display:flex; align-items:center">
                     <div>

@@ -146,7 +146,7 @@ foreach($data['kq'] as  $item) {
     $image = explode(',', $item['thumbnail']);
     echo '              <tr>
                             <td>'.$index++.'</td>
-                            <td><img class="imgTSP" src="'.$image[0].'" alt="">
+                            <td><img class="imgTSP" src="'.url_s3.$image[0].'" alt="">
                             </td>
                             <td class="img-tb1-name">'.$item['Name'].'</td>
                             <td>'.$item['sold'].'</td>

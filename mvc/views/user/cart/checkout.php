@@ -62,7 +62,7 @@ foreach($result as $item) {
     <div class="card-body p-4">
         <div class="row align-items-center">
             <div class="col-md-2">
-                <img src="'.$item['image'].'"
+                <img src="'.url_s3.$item['image'].'"
                     class="img-fluid" alt="Generic placeholder image">
             </div>
             <div class="col-md-4 d-flex justify-content-center">

@@ -12,7 +12,7 @@ class Product extends Controller {
         $this->Authorzation     = $this->helper('Authorzation');
         $this->Cloud            = $this->helper('Cloud');
         $this->Cloudinary       = $this->Cloud->connect();
-        $this->S3_Upload        = $this->helper('awsUpload');
+        $this->awsUpload        = $this->helper('awsUpload');
     }
 
     public function index() {
@@ -76,13 +76,11 @@ class Product extends Controller {
                             foreach($file as $val) {
                                 // $result = $this->Cloudinary->uploadApi()->upload($_FILES['img']['tmp_name'][$i++]);
                                 // $thumb[] = $result['secure_url'];
-                                $keyName = 'uploads/' . basename($_FILES['img']['name'][$i]);
-                                $this->S3_Upload->upload($_FILES['img']['tmp_name'][$i++], 'web-shopping', $keyName);
+                                $keyName = uniqid('', true); $keyName = str_replace('.', '', $keyName);
+                                $this->awsUpload->upload($_FILES['img']['tmp_name'][$i++], 'web-shopping', $keyName);
                                 $thumb[] = $keyName;
                             }
                             $data['thumbnail'] = implode(',', $thumb);
-                            print_r($data['thumbnail']);
-                            die;
                             $this->ProductModel->add($data);
                             header('location: http://localhost:8088/shop/admin/product');
                         } else {
@@ -171,19 +169,17 @@ class Product extends Controller {
                         unset($_POST['old_thumbnail']);
                         $array = explode(',', $old_thumbnail);
                         foreach($array as $item) {
-                            $parts = explode('/', $item);
-                            $last = array_pop($parts);
-                            $publicId = explode('.', $last);
-                            $result = $this->Cloudinary->uploadApi()->destroy($publicId[0], [
-                                'resource_type' => 'image'
-                            ]);
+                            // $result = $this->awsUpload->delete('web-shopping', $item);
                         }
                         if($_FILES['img']['name'][0] != '') {
                             $file = $_FILES['img']['name'];
                             $i = 0;
                             foreach($file as $val) {
-                                $result = $this->Cloudinary->uploadApi()->upload($_FILES['img']['tmp_name'][$i++]);
-                                $thumb[] = $result['secure_url'];
+                                // $result = $this->Cloudinary->uploadApi()->upload($_FILES['img']['tmp_name'][$i++]);
+                                // $thumb[] = $result['secure_url'];
+                                $keyName = uniqid('', true); $keyName = str_replace('.', '', $keyName);
+                                $this->awsUpload->upload($_FILES['img']['tmp_name'][$i++], 'web-shopping', $keyName);
+                                $thumb[] = $keyName;
                             }
                             $data['thumbnail'] = implode(',', $thumb);
                             $_POST['thumbnail'] = implode(',', $thumb);

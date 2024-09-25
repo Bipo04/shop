@@ -12,7 +12,7 @@ $thumbnails = explode(',', $data['product']['thumbnail']);
                         <div class="img-showcase">
                             <?php
 foreach($thumbnails as $item) {
-    echo '<img src="'.$item.'" alt="">';
+    echo '<img src="'.url_s3.$item.'" alt="">';
 }
 ?>
                         </div>
@@ -23,7 +23,7 @@ $i = 1;
 foreach($thumbnails as $item) {
     echo '<div class="img-item">
     <a href="#" data-id="'.$i++.'">
-        <img src="'.$item.'" alt="">
+        <img src="'.url_s3.$item.'" alt="">
     </a>
 </div>';
 }
