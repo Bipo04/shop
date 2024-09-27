@@ -169,7 +169,7 @@ class Product extends Controller {
                         unset($_POST['old_thumbnail']);
                         $array = explode(',', $old_thumbnail);
                         foreach($array as $item) {
-                            // $result = $this->awsUpload->delete('web-shopping', $item);
+                            $result = $this->awsUpload->delete('web-shopping', $item);
                         }
                         if($_FILES['img']['name'][0] != '') {
                             $file = $_FILES['img']['name'];
