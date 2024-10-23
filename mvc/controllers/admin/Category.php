@@ -48,7 +48,7 @@ class Category extends Controller {
                         unset($_POST['btn']);
                         $data = $req->postFields();
                         $this->CategoryModel->add($data);
-                        header('location: http://localhost:8088/shop/admin/category');
+                        header('location: '.base_url_admin.'/category');
                     }
             
                     $this->view('layouts/admin_layout', [
@@ -111,7 +111,7 @@ class Category extends Controller {
                         unset($_POST['id']);
                         $data = $req->postFields();
                         $this->CategoryModel->update($data, ['id' => $id]);
-                        header('location: http://localhost:8088/shop/admin/category');
+                        header('location: '.base_url_admin.'/category');
                         die;
                     }
                     $data = $req->getFields();

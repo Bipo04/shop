@@ -64,7 +64,7 @@ foreach($data['orders'] as $item) {
                             <td>
                                 <button class="btn btn-outline-primary" onclick="editOrder(this)"
                                     style="font-size: 15px;">Sửa</button>
-                                <a href="http://localhost:8088/shop/admin/order/detail?id='.$item['id'].'">
+                                <a href="'.base_url_admin.'/order/detail?id='.$item['id'].'">
                                 <button class="btn btn-outline-dark"
                                     style="font-size: 15px">Chi tiết</button></a>
                             </td>
@@ -83,17 +83,13 @@ foreach($data['orders'] as $item) {
 </div>
 </div>
 
-<!-- <script src="<?php echo _WEB_ROOT ?>/public/admin/js/order.js"></script> -->
-
 <script>
 function editOrder(button) {
     const orderRow = button.closest('tr');
     const statusCell = orderRow.querySelector('.order-status');
     const editButton = button;
     if (editButton.textContent === "Sửa") {
-        // Lưu trạng thái hiện tại
         const currentStatus = statusCell.textContent;
-        // Tạo dropdown
         statusCell.innerHTML = `
             <select class="form-control">
                 <option ${currentStatus === 'Chờ xử lí' ? 'selected' : ''}>Chờ xử lí</option>
@@ -124,7 +120,7 @@ function editOrder(button) {
             }
         };
 
-        xhr.open('POST', 'http://localhost:8088/web/admin/order/update', true);
+        xhr.open('POST', '<?=base_url_admin?>/order/update', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.send(`id=${id}&status=${newStatus}`);
     }

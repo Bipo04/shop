@@ -43,7 +43,7 @@ class Account extends Controller {
             }
         }
         else {
-            header('location: http://localhost:8088/shop/auth/login');
+            header('location: '.base_url.'/auth/login');
         }
     }
 
@@ -79,7 +79,7 @@ class Account extends Controller {
         
                     $kq = $this->OrdersModel->findAll(['*'], $conditions, 'order_date', 'desc');
                     
-                    $data = $this->OrdersModel->queryExecute('SELECT * FROM dbo.getPurchase(' . $userId . ')');
+                    $data = $this->OrdersModel->queryExecute('CALL getPurchase(' . $userId . ')');
                     foreach ($kq as &$order) {
                         $order['products'] = [];
                         foreach ($data as $a) {
@@ -104,7 +104,7 @@ class Account extends Controller {
             }
         }
         else {
-            header('location: http://localhost:8088/shop/auth/login');
+            header('location: '.base_url.'/auth/login');
         }
     }
     

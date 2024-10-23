@@ -62,7 +62,7 @@ if(isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
                 </div>
             </div>
             <div class="col-md-1 d-flex justify-content-center">
-                <div class="content_col"><a href="http://localhost:8088/shop/cart/delete?index='.$key.'">Xóa</a></div>
+                <div class="content_col"><a href="'.base_url.'/cart/delete?index='.$key.'">Xóa</a></div>
             </div>
         </div>
     </div>
@@ -75,7 +75,7 @@ echo '  <div class="fixed-box">
                     <span style="font-size: 16px;padding-right: 5px;">Tổng thanh toán: </span>
                     <span style="font-size: 16px;padding-right: 5px;" class="amount-to-format">'.$totalPrice.'</span>
                 </p>
-                <form action="http://localhost:8088/shop/cart/checkout" method="post">
+                <form action="'.base_url.'/cart/checkout" method="post">
                     <div class="buy-btn">
                         <button type="submit" class="btn btn-primary">Đặt hàng</button>
                     </div>
@@ -86,7 +86,7 @@ echo '  <div class="fixed-box">
 else {
 echo '<div class="card" style="height: 400px; border:none; display: flex;justify-content: center;align-items: center; ">
     <img src="'._WEB_ROOT.'/public/clients/images/empty-cart.webp" alt="" style="width:300px; margin-bottom:20px">
-    <a href="http://localhost:8088/shop/home">
+    <a href="'.base_url.'/home">
         <button class="btn btn-primary">Mua ngay</button>
     </a>
 </div>';
@@ -118,7 +118,7 @@ const quantityInputs = document.querySelectorAll('.qty');
 
 const updateCart = function(index, quantity) {
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://localhost:8088/shop/cart/update', true);
+    xhr.open('POST', '<?=base_url?>/cart/update', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
     xhr.onreadystatechange = function() {

@@ -94,29 +94,22 @@ foreach($images as $item) {
 </div>
 
 <script>
-// Lấy vị trí hiển thị ảnh là thẻ div previewImagé
 function previewImages(event) {
     var previewContainer = document.getElementById('previewImages');
     var files = event.target.files;
-    // Vòng lặp thêm ảnh và các thẻ liên quan
     for (var i = 0; i < files.length; i++) {
         var file = files[i];
         var reader = new FileReader();
         reader.onload = function(e) {
-            // tạo thẻ div có class image-container
             var imageContainer = document.createElement('div');
             imageContainer.classList.add('image-container');
-            // tạo img
             var image = document.createElement('img');
             image.src = e.target.result;
             image.alt = file.name;
-            // tạo button
             var closeButton = document.createElement('button');
             closeButton.classList.add('close-button');
             closeButton.innerHTML = 'x';
-            // Thêm hàm cho btn
             closeButton.addEventListener('click', deleteImage);
-            //thêm các thẻ
             imageContainer.appendChild(image);
             imageContainer.appendChild(closeButton);
             previewContainer.appendChild(imageContainer);

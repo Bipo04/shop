@@ -29,17 +29,16 @@ class Revenue extends Controller {
                                 'end'           => $end,
                                 'currentMonth'  => $currentMonth,
                                 'currentYear'   => $currentYear];
-                            $data = $this->OrdersModel->queryExecute("SELECT Id, Name, Inbound_price, sold, Revenue,  
-                                                                    (Revenue - Inbound_price * sold) as Profit
-                                                                    FROM DayRevenue('".$start."','".$end."')
-                                                                    ORDER BY Id"
-                                                                    );
-                            $data1 = $this->OrdersModel->queryExecute("SELECT
-                                                                    SUM(sold) AS Sold,
-                                                                    SUM(Revenue) AS TotalRevenue, 
-                                                                    SUM(Revenue - Inbound_price * sold) AS Profit
-                                                                    FROM DayRevenue('".$start."','".$end."');"
-                                                                    );
+                            $data = $this->OrdersModel->queryExecute("CALL DayRevenue('".$start."','".$end."')");
+                            $sold = 0; $totalRevenue = 0; $profit = 0;
+                            foreach($data as $item) {
+                                $sold += $item['sold'];
+                                $totalRevenue += $item['Revenue'];
+                                $profit += $item['Profit'];
+                            }
+                            $data1 = ['Sold' => $sold,
+                                      'TotalRevenue' => $totalRevenue,
+                                      'Profit' => $profit];
                         }
                         if($_GET['type'] == 'month') {
                             $month = $_GET['month'];
@@ -48,34 +47,33 @@ class Revenue extends Controller {
                                 'year'          => $year,
                                 'currentMonth'  => $currentMonth,
                                 'currentYear'   => $currentYear];
-                            $data = $this->OrdersModel->queryExecute("SELECT Id, Name, Inbound_price, sold, Revenue,  
-                                                                    (Revenue - Inbound_price * sold) as Profit
-                                                                    FROM MonthRevenue(".$year.",".$month.")
-                                                                    ORDER BY Id"
-                                                                    );
-                            $data1 = $this->OrdersModel->queryExecute("SELECT
-                                                                    SUM(sold) AS Sold,
-                                                                    SUM(Revenue) AS TotalRevenue, 
-                                                                    SUM(Revenue - Inbound_price * sold) AS Profit
-                                                                    FROM MonthRevenue(".$year.",".$month.")"
-                                                                    );
+                            $data = $this->OrdersModel->queryExecute("CALL MonthRevenue(".$year.",".$month.")");
+                            $sold = 0; $totalRevenue = 0; $profit = 0;
+                            foreach($data as $item) {
+                                $sold += $item['sold'];
+                                $totalRevenue += $item['Revenue'];
+                                $profit += $item['Profit'];
+                            }
+                            $data1 = ['Sold' => $sold,
+                                      'TotalRevenue' => $totalRevenue,
+                                      'Profit' => $profit];
+
                         }
                         if($_GET['type'] == 'year') {
                             $year = $_GET['year'];
                             $a = ['year'        => $year,
                                 'currentMonth'  => $currentMonth,
                                 'currentYear'   => $currentYear];
-                            $data = $this->OrdersModel->queryExecute("SELECT Id, Name, Inbound_price, sold, Revenue,  
-                                                                    (Revenue - Inbound_price * sold) as Profit
-                                                                    FROM YearRevenue(".$year.")
-                                                                    ORDER BY Id"
-                                                                    );
-                            $data1 = $this->OrdersModel->queryExecute("SELECT
-                                                                    SUM(sold) AS Sold,
-                                                                    SUM(Revenue) AS TotalRevenue, 
-                                                                    SUM(Revenue - Inbound_price * sold) AS Profit
-                                                                    FROM YearRevenue(".$year.")"
-                                                                    );
+                            $data = $this->OrdersModel->queryExecute("CALL YearRevenue(".$year.")");
+                            $sold = 0; $totalRevenue = 0; $profit = 0;
+                            foreach($data as $item) {
+                                $sold += $item['sold'];
+                                $totalRevenue += $item['Revenue'];
+                                $profit += $item['Profit'];
+                            }
+                            $data1 = ['Sold' => $sold,
+                                      'TotalRevenue' => $totalRevenue,
+                                      'Profit' => $profit];
                         }
                     }
                     else {
@@ -83,23 +81,22 @@ class Revenue extends Controller {
                         $date = $now->format('Y-m-d');
                         $a = ['start' => $date,
                                 'end' => $date];
-                        $data = $this->OrdersModel->queryExecute("SELECT Id, Name, Inbound_price, sold, SUM(Revenue) as Revenue,  
-                                                                SUM((Revenue - Inbound_price * sold)) as Profit
-                                                                FROM DayRevenue('".$date."','".$date."')
-                                                                GROUP BY Id, Name, Inbound_price, sold"
-                                                                );
-                        $data1 = $this->OrdersModel->queryExecute("SELECT
-                                                                SUM(sold) AS Sold,
-                                                                SUM(Revenue) AS TotalRevenue, 
-                                                                SUM(Revenue - Inbound_price * sold) AS Profit
-                                                                FROM DayRevenue('".$date."','".$date."');"
-                                                                );
+                        $data = $this->OrdersModel->queryExecute("CALL DayRevenue('".$date."','".$date."')");
+                        $sold = 0; $totalRevenue = 0; $profit = 0;
+                        foreach($data as $item) {
+                            $sold += $item['sold'];
+                            $totalRevenue += $item['Revenue'];
+                            $profit += $item['Profit'];
+                        }
+                        $data1 = ['Sold' => $sold,
+                                    'TotalRevenue' => $totalRevenue,
+                                    'Profit' => $profit];
                     }
                     $this->view('layouts/admin_layout', [
                         'page'      => 'revenue/index',
                         'type'      => 'bcao',
                         'revenue'   => $data,
-                        'tongquat'  => $data1[0],
+                        'tongquat'  => $data1,
                         'kind'      => $kind,
                         'a'         => $a,
                     ]);

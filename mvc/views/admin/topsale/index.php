@@ -148,7 +148,7 @@ foreach($data['kq'] as  $item) {
                             <td>'.$index++.'</td>
                             <td><img class="imgTSP" src="'.url_s3.$image[0].'" alt="">
                             </td>
-                            <td class="img-tb1-name">'.$item['Name'].'</td>
+                            <td class="img-tb1-name">'.$item['name'].'</td>
                             <td>'.$item['sold'].'</td>
                         </tr>';
 }

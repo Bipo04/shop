@@ -18,19 +18,18 @@ class Topsale extends Controller {
 
                 $auth = $this->Authorzation->checkAuth($verify);
                 if($auth == true) {
-                    $kq = $this->OrdersModel->queryExecute(
-                        "SELECT * FROM v_TopSelling"
-                    );
+                    $kq = $this->OrdersModel->queryExecute("CALL GetTopSellingProducts;");
                     foreach($kq as $item) {
-                        $idArray[] = $item['Id'];
+                        $idArray[] = $item['id'];
                     }
                     $id = array_values($idArray);
                     $id = implode(',', $id);
-                    $kq2 = $this->OrdersModel->queryExecute2(
+                    $this->OrdersModel->queryExecute2(
                         'UPDATE Product
-                        SET hot=0
-        
-                        UPDATE Product
+                        SET hot=0'
+                    );
+                    $this->OrdersModel->queryExecute2(
+                        'UPDATE Product
                         SET hot=1
                         WHERE id IN ('.$id.')'
                     );

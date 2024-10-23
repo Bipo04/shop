@@ -80,7 +80,7 @@ class AuthModels extends Database {
     }
     
     private function findUsername($username) {
-        $sql = "SELECT * FROM [$this->table] WHERE username = :username";
+        $sql = "SELECT * FROM ".$this->table." WHERE username = :username";
         $query = $this->conn->prepare($sql);
         $query->bindParam(':username', $username);
         $query->execute();

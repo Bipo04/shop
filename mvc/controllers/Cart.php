@@ -33,7 +33,7 @@ class Cart extends Controller {
             }
         }
         else {
-            header('location: http://localhost:8088/shop/auth/login');
+            header('location: '.base_url.'/auth/login');
         }
     }
     
@@ -66,7 +66,7 @@ class Cart extends Controller {
                             $_SESSION['cart'][] = $data;
                         }
                     }
-                    header('location: http://localhost:8088/shop/cart');
+                    header('location: '.base_url.'/cart');
                 }
             }
             else {
@@ -76,7 +76,7 @@ class Cart extends Controller {
             }
         }
         else {
-            header('location: http://localhost:8088/shop/auth/login');
+            header('location: '.base_url.'/auth/login');
         }
     }
 
@@ -101,7 +101,7 @@ class Cart extends Controller {
             }
         }
         else {
-            header('location: http://localhost:8088/shop/auth/login');
+            header('location: '.base_url.'/auth/login');
         }
     }
 
@@ -114,7 +114,7 @@ class Cart extends Controller {
                 if($authUser == true) {
                     $index = $_GET['index'];
                     unset($_SESSION['cart'][$index]);
-                    header('location: http://localhost:8088/shop/cart');
+                    header('location: '.base_url.'/cart');
                 }
             }
             else {
@@ -124,7 +124,7 @@ class Cart extends Controller {
             }
         }
         else {
-            header('location: http://localhost:8088/shop/auth/login');
+            header('location: '.base_url.'/auth/login');
         }
     }
 
@@ -170,7 +170,7 @@ class Cart extends Controller {
             }
         }
         else {
-            header('location: http://localhost:8088/shop/auth/login');
+            header('location: '.base_url.'/auth/login');
         }
     }
     // id, user_id, order_date, status, consignee_name, address, phone_number
@@ -193,6 +193,8 @@ class Cart extends Controller {
                         ];
                         $kq = $this->OrdersModel->add($data);
                         $result = json_decode($kq, true);
+                        $updateSql = "UPDATE Orders SET order_code = CONCAT('HD', LPAD(".$result['id'].", 5, '0')) WHERE id = " . $result['id'];
+                        $this->OrdersModel->queryExecute2($updateSql);
                         if($result['type'] == 'success') {
                             if(isset($_SESSION['buy2'])) {
                                 $products = $_SESSION['buy2'];
@@ -221,7 +223,7 @@ class Cart extends Controller {
             }
         }
         else {
-            header('location: http://localhost:8088/shop/auth/login');
+            header('location: '.base_url.'/auth/login');
         }
     }
 }

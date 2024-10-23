@@ -113,7 +113,7 @@ function confirmEdit(btn) {
         }
     };
 
-    xhr.open('POST', 'http://localhost:8088/shop/admin/user/update', true);
+    xhr.open('POST', '<?=base_url_admin?>/user/update', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send(`id=${UserId}&role=${newRole}`);
 }
@@ -141,7 +141,7 @@ function deleteUser(btn) {
             }
         };
 
-        xhr.open('POST', 'http://localhost:8088/shop/admin/user/delete', true);
+        xhr.open('POST', '<?=base_url_admin?>/user/delete', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.send(`id=${deletedUserId}`);
     }

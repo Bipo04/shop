@@ -101,7 +101,7 @@ class MyModels extends Database {
         if ($query->execute()) {
             return json_encode(
                 array(
-                    'type'      => 'successfully',
+                    'type'      => 'success',
                     'Message'   => 'Delete data success',
                 )
             );
@@ -116,10 +116,10 @@ class MyModels extends Database {
     }
 
     public function findAll($data = ['*'], $where = NULL, $orderBy = NULL, $order = "DESC") {
-        $data = implode(",",$data);
+        $data = implode(",", $data);
         $where_sql = $this->buildWhereString($where);
         $sql = "SELECT $data FROM $this->table WHERE $where_sql";
-        if($orderBy) {
+        if ($orderBy) {
             $sql .= " ORDER BY $orderBy $order";
         }
         $query = $this->conn->prepare($sql);
@@ -138,9 +138,6 @@ class MyModels extends Database {
         ) {
         $data = implode(",",$data);
         $sql ="SELECT";
-        if($limit) {
-            $sql .= " TOP $limit ";
-        }
         $sql .= " $data FROM $this->table";
         if (isset($where) && $where != NULL) {
             $fields = array_keys($where);
@@ -155,6 +152,9 @@ class MyModels extends Database {
             if ($orderby !='' && $orderby != NULL) {
                 $sql .= " ORDER BY ".$orderby.' '.$order;
             }
+            if($limit) {
+                $sql .= " LIMIT $limit ";
+            }
             $query = $this->conn->prepare($sql);
             $query->execute(array_values($where));
         }
@@ -165,11 +165,15 @@ class MyModels extends Database {
             if ($orderby !='' && $orderby != NULL) {
                 $sql .= " ORDER BY ".$orderby.$order;
             }
+            if($limit) {
+                $sql .= " LIMIT $limit ";
+            }
             $query = $this->conn->prepare($sql);
             $query->execute();
         }
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
+    
 
     public function queryExecute($sql) {
         $query = $this->conn->prepare($sql);

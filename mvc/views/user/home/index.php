@@ -28,7 +28,7 @@ foreach($data['data'] as $val) {
     <div class="product-list">';
     foreach($val as $item) {
     $images = explode(',',$item['thumbnail']);
-    echo                    '<a href="http://localhost:8088/shop/product?id='.$item['id'].'"><div class="product-list-item">
+    echo                    '<a href="'.base_url.'/product?id='.$item['id'].'"><div class="product-list-item">
                                 <img class="product-list-item-img"
                                     src="'.url_s3.$images[0].'" alt="">
                             <h6 class="product_name">'.$item['title'].'</h6>
@@ -53,14 +53,13 @@ foreach($data['data'] as $val) {
     </div>
 </div>
 
-<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> -->
 <script>
 const profileText = document.querySelector(".profile-text");
 const item = document.querySelector(".profile-dropdown");
 
 profileText.addEventListener("click", (event) => {
     item.classList.toggle("dropdown-active");
-    event.stopPropagation(); // Ngăn chặn sự kiện click từ việc lan ra ngoài
+    event.stopPropagation();
 });
 
 document.addEventListener("click", (event) => {
@@ -98,11 +97,10 @@ function formatToVND(amount) {
     });
 }
 
-// Lặp qua tất cả các thẻ có class="amount-to-format" và định dạng lại số tiền thành VND
 document.querySelectorAll('.amount-to-format').forEach(element => {
-    const amountValue = parseFloat(element.textContent); // Lấy giá trị số tiền từ nội dung của thẻ
+    const amountValue = parseFloat(element.textContent); 
     element.textContent = formatToVND(
-        amountValue); // Định dạng lại số tiền thành VND và cập nhật nội dung của thẻ
+        amountValue);
 });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

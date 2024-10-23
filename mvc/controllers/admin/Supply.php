@@ -49,7 +49,7 @@ class Supply extends Controller {
                         unset($_POST['btn']);
                         $data = $req->postFields();
                         $this->SupplyModel->add($data);
-                        header('location: http://localhost:8088/shop/admin/supply');
+                        header('location: '.base_url_admin.'/supply');
                     }
             
                     $this->view('layouts/admin_layout', [
@@ -85,7 +85,7 @@ class Supply extends Controller {
                         $id = $data['id'];
                         unset($data['id']);
                         $this->SupplyModel->update($data, ['id' => $id]);
-                        header('location: http://localhost:8088/shop/admin/supply');
+                        header('location: '.base_url_admin.'/supply');
                     }
                     $id = $_GET['id'];
                     $supply = $this->SupplyModel->findAll(['*'], ['id' => $id]);

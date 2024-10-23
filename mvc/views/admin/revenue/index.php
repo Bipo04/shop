@@ -112,7 +112,7 @@ if($data['kind'] == 'year') {
                         <?php
 foreach($data['revenue'] as $item) {
     echo '              <tr>
-                            <td>'.$item['Id'].'</td>
+                            <td>'.$item['ID'].'</td>
                             <td>'.$item['Name'].'</td>
                             <td class="costPrice amount-to-format">'.$item['Inbound_price'].'</td>
                             <td class="quantitySold">'.$item['sold'].'</td>

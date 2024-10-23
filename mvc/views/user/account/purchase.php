@@ -37,8 +37,8 @@ a {
 
 <div class="container">
     <div class="sidebar">
-        <a class="sidebar-item" href="http://localhost:8088/shop/account/profile">Thông tin cá nhân</a>
-        <a class="sidebar-item active" href="http://localhost:8088/shop/account/purchase">Đơn hàng</a>
+        <a class="sidebar-item" href="<?=base_url?>/account/profile">Thông tin cá nhân</a>
+        <a class="sidebar-item active" href="<?=base_url?>/account/purchase">Đơn hàng</a>
     </div>
     <div class="content-container">
         <div class="profile-content">
@@ -46,27 +46,27 @@ a {
             <div class="card" style="margin-bottom: 10px; height: 60px; padding: auto; position: sticky;">
                 <section class="card_state card-body">
                     <a class="state <?php if($data['type'] == 1) echo 'active'; ?>"
-                        href="http://localhost:8088/shop/account/purchase?type=1" title="Tất cả" aria-role="Tab">
+                        href="<?=base_url?>/account/purchase?type=1" title="Tất cả" aria-role="Tab">
                         <span>Tất cả</span>
                     </a>
                     <a class="state <?php if($data['type'] == 2) echo 'active'; ?>"
-                        href="http://localhost:8088/shop/account/purchase?type=2" title="Chờ xử lí" aria-role="Tab">
+                        href="<?=base_url?>/account/purchase?type=2" title="Chờ xử lí" aria-role="Tab">
                         <span>Chờ xử lí</span>
                     </a>
                     <a class="state <?php if($data['type'] == 3) echo 'active'; ?>"
-                        href="http://localhost:8088/shop/account/purchase?type=3" title="Đang chuẩn bị" aria-role="Tab">
+                        href="<?=base_url?>/account/purchase?type=3" title="Đang chuẩn bị" aria-role="Tab">
                         <span>Đang chuẩn bị</span>
                     </a>
                     <a class="state <?php if($data['type'] == 4) echo 'active'; ?>"
-                        href="http://localhost:8088/shop/account/purchase?type=4" title="Đang giao" aria-role="Tab">
+                        href="<?=base_url?>/account/purchase?type=4" title="Đang giao" aria-role="Tab">
                         <span>Đang giao</span>
                     </a>
                     <a class="state <?php if($data['type'] == 5) echo 'active'; ?>"
-                        href="http://localhost:8088/shop/account/purchase?type=5" title="Đã giao" aria-role="Tab">
+                        href="<?=base_url?>/account/purchase?type=5" title="Đã giao" aria-role="Tab">
                         <span>Đã giao</span>
                     </a>
                     <a class="state <?php if($data['type'] == 6) echo 'active'; ?>"
-                        href="http://localhost:8088/shop/account/purchase?type=6" title="Đã hủy" aria-role="Tab">
+                        href="<?=base_url?>/account/purchase?type=6" title="Đã hủy" aria-role="Tab">
                         <span>Đã hủy</span>
                     </a>
                 </section>
@@ -86,7 +86,7 @@ foreach($data['purchase'] as $item) {
                     <div style="padding: 10px 24px;align-items:center; display:flex">
                         <div style="flex-grow:1;">
                             <span>Ngày đặt hàng: </span>
-                            <span>'.$item['order_date'].'</span>
+                            <span class="dd_time">'.$item['order_date'].'</span>
                         </div>
                         <div style="display: flex; align-items:center;">
                             <p style="margin:0px">
@@ -141,7 +141,7 @@ const item = document.querySelector(".profile-dropdown");
 
 profileText.addEventListener("click", (event) => {
     item.classList.toggle("dropdown-active");
-    event.stopPropagation(); // Ngăn chặn sự kiện click từ việc lan ra ngoài
+    event.stopPropagation(); 
 });
 
 document.addEventListener("click", (event) => {
@@ -152,7 +152,6 @@ document.addEventListener("click", (event) => {
     }
 });
 
-/* myFunction toggles between adding and removing the show class, which is used to hide and show the dropdown content */
 function myFunction() {
     document.getElementById("ac_menu").classList.toggle("show");
 }
@@ -170,14 +169,13 @@ function deleteProduct() {
         event.target.remove();
 
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', 'http://localhost:8088/shop/account/purchase', true);
+        xhr.open('POST', '<?=base_url?>/account/purchase', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.send(`id=${id}`);
     }
 }
 
 
-// Hàm để định dạng số tiền sang VND
 function formatToVND(amount) {
     return amount.toLocaleString('vi-VN', {
         style: 'currency',
@@ -185,10 +183,32 @@ function formatToVND(amount) {
     });
 }
 
-// Lặp qua tất cả các thẻ có class="amount-to-format" và định dạng lại số tiền thành VND
 document.querySelectorAll('.amount-to-format').forEach(element => {
-    const amountValue = parseFloat(element.textContent); // Lấy giá trị số tiền từ nội dung của thẻ
+    const amountValue = parseFloat(element.textContent); 
     element.textContent = formatToVND(
-        amountValue); // Định dạng lại số tiền thành VND và cập nhật nội dung của thẻ
+        amountValue);
 });
+
+function removeMilliseconds(dateTimeStr) {
+    // Tách chuỗi thành ngày và thời gian
+    let parts = dateTimeStr.split(' ');
+
+    // Lấy phần ngày và phần thời gian
+    let datePart = parts[0];
+    let timePart = parts[1];
+
+    // Tách phần thời gian để loại bỏ ".000"
+    let timeParts = timePart.split('.');
+    let timeWithoutMs = timeParts[0];
+
+    // Kết hợp lại thành định dạng mới
+    let formattedDateTime = datePart + ' ' + timeWithoutMs;
+
+    return formattedDateTime;
+}
+
+document.querySelectorAll(".dd_time").forEach((value, index) => {
+    value.textContent = removeMilliseconds(value.textContent);
+    console.log(value);
+})
 </script>

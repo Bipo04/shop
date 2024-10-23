@@ -23,20 +23,26 @@ class Dashboard extends Controller {
                         $date = $now->format('Y-m-d');
                     }
                     $orderSold = $this->OrdersModel->queryExecute(
-                        "SELECT COUNT(*) as sold FROM getOrderByDate('".$date."')"
+                        "SELECT COUNT(*) AS total_orders FROM Orders WHERE DATE(order_date) = '".$date."' AND status <> 'Đã hủy'"
                     );
-                    $kq = $this->OrdersModel->queryExecute(
-                        "SELECT 
-                            SUM(Revenue) AS TotalRevenue, 
-                            SUM(Revenue - Inbound_price * sold) AS Profit
-                        FROM DayRevenue('".$date."','".$date."');"
-                    );
+
+                    $stmt = $this->OrdersModel->queryExecute("CALL DayRevenue('".$date."', '".$date."')");
+                    $totalRevenue = 0;
+                    $totalProfit = 0;
+                    foreach ($stmt as $row) {
+                        $totalRevenue += $row['Revenue'];
+                        $totalProfit += ($row['Revenue'] - ($row['Inbound_price'] * $row['sold']));
+                    }
+                    $kq = [
+                        'TotalRevenue' => $totalRevenue,
+                        'Profit' => $totalProfit,
+                    ];
                     $order = $this->OrdersModel->queryExecute(
-                        "SELECT * FROM getOrderByDate('".$date."')"
+                        "SELECT * FROM Orders WHERE DATE(order_date) = '".$date."' AND status <> 'Đã hủy'"
                     );
                     $status = $this->OrdersModel->queryExecute(
                         "SELECT status, COUNT(status) AS StatusCount
-                        FROM getOrderByDate('".$date."')
+                        FROM Orders WHERE DATE(order_date) = '".$date."' AND status <> 'Đã hủy'
                         GROUP BY status"
                     );
                     $statusShow['Chờ xử lí'] = 0;
@@ -51,7 +57,7 @@ class Dashboard extends Controller {
                         'title'     => 'Dashboard',
                         'type'      => 'none',
                         'orderSold' => $orderSold[0],
-                        'kq'        => $kq[0],
+                        'kq'        => $kq,
                         'order'     => $order,
                         'statusShow'=> $statusShow,
                         'date'      => $date

@@ -180,7 +180,7 @@ document.getElementById('saveChangesBtn').addEventListener('click', function() {
         }
     };
 
-    xhr.open('POST', 'http://localhost:8088/shop/cart/checkout', true);
+    xhr.open('POST', '<?=base_url?>/cart/checkout', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send(`fullname=${fullname}&phone_number=${phone_number}&address=${address}&type=change`);
 });
@@ -209,7 +209,7 @@ document.querySelector('.xacnhan').addEventListener('click', function() {
             }
         };
     
-        xhr.open('POST', 'http://localhost:8088/shop/cart/buy', true);
+        xhr.open('POST', '<?=base_url?>/cart/buy', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.send(
             `consignee_name=${fullname}&phone_number=${phone_number}&address=${address}&totalprice=${totalprice}&type=buy`
@@ -219,11 +219,10 @@ document.querySelector('.xacnhan').addEventListener('click', function() {
 
 span.onclick = function() {
     modal.style.display = "none";
-    window.location.href = "http://localhost:8088/shop/home";
+    window.location.href = "<?=base_url?>/home";
 }
 
 function convertNumber(numberStr) {
-    // Sử dụng replace() để loại bỏ dấu chấm
     return numberStr.replace(/\./g, '');
 }
 
@@ -234,11 +233,10 @@ function formatToVND(amount) {
     });
 }
 
-// Lặp qua tất cả các thẻ có class="amount-to-format" và định dạng lại số tiền thành VND
 document.querySelectorAll('.amount-to-format').forEach(element => {
-    const amountValue = parseFloat(element.textContent); // Lấy giá trị số tiền từ nội dung của thẻ
+    const amountValue = parseFloat(element.textContent); 
     element.textContent = formatToVND(
-        amountValue); // Định dạng lại số tiền thành VND và cập nhật nội dung của thẻ
+        amountValue);
 });
 
 

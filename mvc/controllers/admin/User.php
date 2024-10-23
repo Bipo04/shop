@@ -50,7 +50,8 @@ class User extends Controller {
                     if($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $id = $_POST['id'];
                         $role = strtolower($_POST['role']);
-                        $query = "EXEC updateUser ".$id.", '".$role."'";
+                        $role = ucwords($role);
+                        $query = "CALL UpdateUserRole(".$id.", '".$role."');";
                         echo $query;
                         $this->UserModel->queryExecute($query);
                     }

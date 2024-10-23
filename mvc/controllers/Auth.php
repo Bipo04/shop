@@ -66,7 +66,7 @@ class Auth extends Controller {
                                             'phone_number' => $check['phone_number'],
                                             'address' => $check['address'],
                                             'email' => $check['email']];
-                        header('location: http://localhost:8088/shop/admin/dashboard');
+                        header('location: '.base_url_admin.'/dashboard');
                         exit(); 
                     }
                     if ($check['role'] == 'user') {
@@ -76,7 +76,7 @@ class Auth extends Controller {
                                             'phone_number' => $check['phone_number'],
                                             'address' => $check['address'],
                                             'email' => $check['email']];
-                        header('location: http://localhost:8088/shop/home');
+                        header('location: '.base_url.'/home');
                         exit();
                     }
             
@@ -95,10 +95,10 @@ class Auth extends Controller {
     public function register() {
         if(isset($_COOKIE['userId'])) {
             if($_SESSION[$_COOKIE['userId']]['role_id'] == '1') {
-                header('location: http://localhost:8088/shop/admin/dashboard');
+                header('location: '.base_url_admin.'/dashboard');
             }
             else {
-                header('location: http://localhost:8088/shop/home');
+                header('location: '.base_url.'/home');
             }
         }
         else {
@@ -123,7 +123,7 @@ class Auth extends Controller {
         setcookie('token', '', time() - 3600, "/");
         unset($_SESSION['user']);
         unset($_SESSION['role']);
-        header('location: http://localhost:8088/shop/auth/login');
+        header('location: '.base_url.'/auth/login');
         exit();
     }
 }

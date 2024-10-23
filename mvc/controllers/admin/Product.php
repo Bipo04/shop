@@ -82,7 +82,7 @@ class Product extends Controller {
                             }
                             $data['thumbnail'] = implode(',', $thumb);
                             $this->ProductModel->add($data);
-                            header('location: http://localhost:8088/shop/admin/product');
+                            header('location: '.base_url_admin.'/product');
                         } else {
                             $this->view('layouts/admin_layout', [
                                 'page'  => 'product/add',
@@ -147,7 +147,7 @@ class Product extends Controller {
                 $auth = $this->Authorzation->checkAuth($verify);
                 if($auth == true) {
                     if(isset($_GET['id'])) {
-                        $query = 'SELECT * FROM getProduct('.$_GET['id'].')';
+                        $query = 'CALL getProduct('.$_GET['id'].')';
                         $product = $this->ProductModel->queryExecute($query);
                         $this->view('layouts/admin_layout', [
                             'page'      => 'product/update',
@@ -185,7 +185,7 @@ class Product extends Controller {
                             $_POST['thumbnail'] = implode(',', $thumb);
                         }
                         $this->ProductModel->update($_POST, ['id' => $id]);
-                        echo "<script>window.location.href='http://localhost:8088/shop/admin/product'</script>";
+                        echo "<script>window.location.href='".base_url_admin."/product'</script>";
                     }
                 }
             }

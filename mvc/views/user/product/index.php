@@ -6,7 +6,6 @@ $thumbnails = explode(',', $data['product']['thumbnail']);
     <div class="row">
         <div class="col-md-4">
             <div class="card" style="padding: 20px;border: none;">
-                <!-- card left -->
                 <div class="product-imgs">
                     <div class="img-display">
                         <div class="img-showcase">
@@ -76,7 +75,7 @@ echo $data['product']['description'];
                             <div class="qtyplus">+</div>
                         </div>
                         <div class="button-container">
-                            <form action="http://localhost:8088/shop/cart/add" method="post">
+                            <form action="<?=base_url?>/cart/add" method="post">
                                 <input type="hidden" name="id" value="<?= $data['product']['id'] ?>">
                                 <input type="hidden" name="price" value="<?php if($data['product']['discount'] != 0) echo $data['product']['discount'];
                                     else echo $data['product']['outbound_price'] ?>">
@@ -86,7 +85,7 @@ echo $data['product']['description'];
                                 <input type="submit" name="add-card-btn" class="round-black-btn" value="Thêm vào giỏ">
                             </form>
 
-                            <form action=" http://localhost:8088/shop/cart/checkout" method="post">
+                            <form action=" <?=base_url?>/cart/checkout" method="post">
                                 <input type="hidden" name="id" value="<?= $data['product']['id'] ?>">
                                 <input type="hidden" name="price" value="<?php if($data['product']['discount'] != 0) echo $data['product']['discount'];
                                     else echo $data['product']['outbound_price'] ?>">
@@ -110,7 +109,7 @@ const item = document.querySelector(".profile-dropdown");
 
 profileText.addEventListener("click", (event) => {
     item.classList.toggle("dropdown-active");
-    event.stopPropagation(); // Ngăn chặn sự kiện click từ việc lan ra ngoài
+    event.stopPropagation(); 
 });
 
 document.addEventListener("click", (event) => {
@@ -121,7 +120,6 @@ document.addEventListener("click", (event) => {
     }
 });
 document.addEventListener('DOMContentLoaded', function() {
-    // Các đoạn mã JavaScript của bạn ở đây
     const imgs = document.querySelectorAll('.img-select a');
     const imgBtns = [...imgs];
     let imgId = 1;
@@ -130,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function() {
         imgItem.addEventListener('click', (event) => {
             event.preventDefault();
             imgId = imgItem.dataset.id;
-            slideImage(); // Gọi slideImage() sau khi imgId đã được cập nhật
+            slideImage(); 
         });
     });
 
@@ -176,10 +174,9 @@ function formatToVND(amount) {
     });
 }
 
-// Lặp qua tất cả các thẻ có class="amount-to-format" và định dạng lại số tiền thành VND
 document.querySelectorAll('.amount-to-format').forEach(element => {
-    const amountValue = parseFloat(element.textContent); // Lấy giá trị số tiền từ nội dung của thẻ
+    const amountValue = parseFloat(element.textContent); 
     element.textContent = formatToVND(
-        amountValue); // Định dạng lại số tiền thành VND và cập nhật nội dung của thẻ
+        amountValue); 
 });
 </script>

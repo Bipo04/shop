@@ -1,7 +1,7 @@
 <div class="container">
     <div class="sidebar">
-        <a class="sidebar-item active" href="http://localhost:8088/shop/account/profile">Thông tin cá nhân</a>
-        <a class="sidebar-item" href="http://localhost:8088/shop/account/purchase">Đơn hàng</a>
+        <a class="sidebar-item active" href="<?=base_url?>/account/profile">Thông tin cá nhân</a>
+        <a class="sidebar-item" href="<?=base_url?>/account/purchase">Đơn hàng</a>
     </div>
 
     <div class="col-md-9">
@@ -81,7 +81,7 @@ document.querySelector('.Save').onclick = () => {
         }
     };
 
-    xhr.open('POST', 'http://localhost:8088/shop/account/profile', true);
+    xhr.open('POST', '<?=base_url?>/account/profile', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send(
         `fullname=${fullname}&phone_number=${phone_number}&address=${address}&email=${email}`

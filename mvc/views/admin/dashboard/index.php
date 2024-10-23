@@ -18,7 +18,7 @@
                     <div class="middle">
                         <div class="left">
                             <h6 style="margin-top:8px">Số đơn hàng</h6>
-                            <h4><?=$data['orderSold']['sold']?></h4>
+                            <h4><?=$data['orderSold']['total_orders']?></h4>
                         </div>
                     </div>
                     <p>Trong 24 giờ</p>
@@ -82,7 +82,7 @@ foreach($data['order'] as $item) {
                 <td class="amount-to-format">'.$item['total_money'].'</td>
                 <td class="dd_time">'.$item['order_date'].'</td>
                 <td>'.$item['status'].'</td>
-                <td class="text-primary"><a href="http://localhost:8088/shop/admin/order/detail?id='.$item['id'].'">Chi tiết</a></td>
+                <td class="text-primary"><a href="'.base_url_admin.'/order/detail?id='.$item['id'].'">Chi tiết</a></td>
             </tr>';
 }
 ?>
@@ -123,7 +123,7 @@ document.getElementById('dateInput').addEventListener('change', function() {
     const url = currentUrl.split('?')[0];
     window.location.href = `${url}?date=${newDate}`;
 
-    xhr.open('POST', 'http://localhost:8088/shop/admin/dashboard', true);
+    xhr.open('POST', '<?=base_url_admin?>/dashboard', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send(`date=${encodeURIComponent(newDate)}`);
 })
